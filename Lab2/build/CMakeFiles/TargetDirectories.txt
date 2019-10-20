@@ -1,3 +1,0 @@
-/home/tojatos/Scripts/cpp/Lab2/build/CMakeFiles/rebuild_cache.dir
-/home/tojatos/Scripts/cpp/Lab2/build/CMakeFiles/Lab2.dir
-/home/tojatos/Scripts/cpp/Lab2/build/CMakeFiles/edit_cache.dir
