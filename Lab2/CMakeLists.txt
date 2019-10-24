@@ -8,10 +8,12 @@ set(PROJECT_NAME Lab2)
 set(SOURCES
     main.cpp
     table.cpp
+    helper.cpp
     )
 set(HEADERS
     constants.h
     table.h
+    helper.h
     )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
