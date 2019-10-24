@@ -14,6 +14,10 @@ public:
     void setName(std::string name);
     bool setNewSize(int tableLen);
     Table *clone();
+    bool acc(Table &other);
+    void printTable();
+    int getValue(int offset);
+    void setValue(int offset, int value);
 private:
     std::string name;
     int *table;

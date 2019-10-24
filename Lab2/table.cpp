@@ -60,3 +60,30 @@ Table *Table::clone()
 {
     return new Table(*this);
 }
+
+bool Table::acc(Table &other)
+{
+    int oldSize = this->tableLen;
+    this->setNewSize(this->tableLen + other.tableLen);
+    copy_table(other.table, this->table, other.tableLen, oldSize);
+    return true;
+}
+
+void Table::printTable()
+{
+    for(int i = 0; i < this->tableLen; ++i)
+    {
+        std::cout << this->table[i] << ' ';
+    }
+    std::cout << '\n';
+}
+
+int Table::getValue(int offset)
+{
+    return this->table[offset];
+}
+
+void Table::setValue(int offset, int value)
+{
+    this->table[offset] = value;
+}

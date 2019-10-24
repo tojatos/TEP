@@ -1,8 +1,8 @@
 
-void copy_table(int *oldTable, int *newTable, int size)
+void copy_table(int *from, int *to, int size, int offset = 0)
 {
-    for(int i = 0; i < size; ++i)
+    for(int i = offset; i < offset + size; ++i)
     {
-        newTable[i] = oldTable[i];
+        to[i] = from[i-offset];
     }
 }
