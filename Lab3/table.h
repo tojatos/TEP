@@ -10,11 +10,12 @@ public:
     Table();
     Table(std::string name, int tableLen);
     Table(const Table &other);
-//    ~Table();
+    ~Table();
     void setName(std::string name);
     bool setNewSize(int tableLen);
     Table *clone();
     Table operator+(Table &other);
+    Table& operator=(const Table &other);
     bool acc(Table &other);
     void printTable();
     int getValue(int offset);

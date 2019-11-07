@@ -19,18 +19,14 @@ Table::Table(std::string name, int tableLen)
 
 Table::Table(const Table &other)
 {
-    this->name = other.name + "_copy";
-    this->tableLen = other.tableLen;
-    this->table = new int[this->tableLen];
-    copy_table(other.table, this->table, this->tableLen);
-    std::cout << "kopiuj: " << this->name << '\n';
+    operator=(other);
 }
 
-//Table::~Table()
-//{
-//    delete[] this->table;
-//    std::cout << "usuwam: " << this->name << '\n';
-//}
+Table::~Table()
+{
+    delete[] this->table;
+    std::cout << "usuwam: " << this->name << '\n';
+}
 
 void Table::setName(std::string name)
 {
@@ -74,6 +70,16 @@ Table Table::operator+(Table &other)
         newTable.setValue(i+this->tableLen, other.getValue(i));
     }
     return newTable;
+}
+
+Table& Table::operator=(const Table &other)
+{
+    this->name = other.name + "_copy";
+    this->tableLen = other.tableLen;
+    this->table = new int[this->tableLen];
+    copy_table(other.table, this->table, this->tableLen);
+    std::cout << "kopiuj: " << this->name << '\n';
+    return *this;
 }
 
 bool Table::acc(Table &other)
