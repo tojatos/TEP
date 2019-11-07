@@ -27,5 +27,24 @@ int main()
     Table tab_2 = tab_0 + tab_1;
     tab_2.printTable();
 
+    Table ar0("first", 6);
+    Table ar1("second", 4);
+    ar0.setValue(0, 1);
+    ar0.setValue(1, 2);
+    ar0.setValue(2, 3);
+    ar0.setValue(3, 4);
+    ar0.setValue(4, 5);
+    ar0.setValue(5, 6);
+    ar1.setValue(0, 1);
+    ar1.setValue(1, 3);
+    ar1.setValue(2, 3);
+    ar1.setValue(3, 8);
+
+    ar0.printTable();
+    ar1.printTable();
+
+    Table dif = ar0 - ar1;
+    dif.printTable();
+
     return 0;
 }

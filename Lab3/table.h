@@ -2,6 +2,7 @@
 #define TABLE_H
 #include <string>
 #include <iostream>
+#include <vector>
 #include "constants.h"
 
 class Table
@@ -15,6 +16,7 @@ public:
     bool setNewSize(int tableLen);
     Table *clone();
     Table operator+(Table &other);
+    Table operator-(Table &other);
     Table& operator=(const Table &other);
     bool acc(Table &other);
     void printTable();

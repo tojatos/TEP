@@ -72,6 +72,35 @@ Table Table::operator+(Table &other)
     return newTable;
 }
 
+Table Table::operator-(Table &other)
+{
+    std::vector<int> result;
+    for(int i = 0; i < this->tableLen; ++i)
+    {
+        bool contains = false;
+        for(int j = 0; j < other.tableLen || contains; ++j)
+        {
+            if(this->table[i] == other.getValue(j))
+            {
+               contains = true;
+            }
+        }
+
+        if(!contains)
+        {
+            result.push_back(this->table[i]);
+        }
+    }
+    int resSize = result.size();
+    Table newTable("wynik", resSize);
+    for(int i = 0; i <= resSize; ++i)
+    {
+        newTable.setValue(i, result[i]);
+    }
+
+    return newTable;
+}
+
 Table& Table::operator=(const Table &other)
 {
     this->name = other.name + "_copy";
