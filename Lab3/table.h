@@ -3,7 +3,9 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <cstring>
 #include "constants.h"
+#include "helper.h"
 
 class Table
 {

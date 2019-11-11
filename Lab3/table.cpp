@@ -1,5 +1,4 @@
 #include "table.h"
-#include "helper.h"
 
 Table::Table()
 {
@@ -7,6 +6,7 @@ Table::Table()
     std::cout << "bezp: " << this->name << '\n';
     this->table = new int[DEFAULT_TABLE_LEN];
     this->tableLen = DEFAULT_TABLE_LEN;
+    memset(this->table, 0, tableLen * sizeof(*this->table));
 }
 
 Table::Table(std::string name, int tableLen)
@@ -15,6 +15,7 @@ Table::Table(std::string name, int tableLen)
     std::cout << "parametr: " << this->name << '\n';
     this->table = new int[tableLen];
     this->tableLen = tableLen;
+    memset(this->table, 0, tableLen * sizeof(*this->table));
 }
 
 Table::Table(const Table &other)
@@ -78,7 +79,7 @@ Table Table::operator-(Table &other)
     for(int i = 0; i < this->tableLen; ++i)
     {
         bool contains = false;
-        for(int j = 0; j < other.tableLen || contains; ++j)
+        for(int j = 0; j < other.tableLen && contains; ++j)
         {
             if(this->table[i] == other.getValue(j))
             {
@@ -92,8 +93,8 @@ Table Table::operator-(Table &other)
         }
     }
     int resSize = result.size();
-    Table newTable("wynik", resSize);
-    for(int i = 0; i <= resSize; ++i)
+    Table newTable ("wynik", resSize);
+    for(int i = 0; i < resSize; ++i)
     {
         newTable.setValue(i, result[i]);
     }
@@ -105,6 +106,7 @@ Table& Table::operator=(const Table &other)
 {
     this->name = other.name + "_copy";
     this->tableLen = other.tableLen;
+    delete[] this->table;
     this->table = new int[this->tableLen];
     copy_table(other.table, this->table, this->tableLen);
     std::cout << "kopiuj: " << this->name << '\n';
