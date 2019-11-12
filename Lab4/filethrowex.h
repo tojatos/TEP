@@ -1,26 +1,23 @@
-#ifndef FILELASTERROR_H
-#define FILELASTERROR_H
+#ifndef FILETHROWEX_H
+#define FILETHROWEX_H
 
 #include <string>
 #include <vector>
 #include "constants.h"
 
-class FileLastError
+class FileThrowEx
 {
 public:
-    FileLastError();
-    FileLastError(std::string fileName);
-    ~FileLastError();
+    FileThrowEx();
+    FileThrowEx(std::string fileName);
+    ~FileThrowEx();
 
     void openFile(std::string fileName);
     void closeFile();
     void printLine(std::string text);
     void printManyLines(std::vector<std::string> text);
-
-    bool getLastError() {return(lastError);}
 private:
-    bool lastError;
     FILE *file;
 };
 
-#endif // FILELASTERROR_H
+#endif // FILETHROWEX_H

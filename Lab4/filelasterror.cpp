@@ -20,7 +20,7 @@ FileLastError::~FileLastError()
 void FileLastError::openFile(std::string fileName)
 {
     lastError = false;
-    file = fopen(fileName.c_str(), "w+");
+    file = fopen(fileName.c_str(), FILE_OPEN_FLAGS);
     if(file == NULL)
     {
         lastError = true;
