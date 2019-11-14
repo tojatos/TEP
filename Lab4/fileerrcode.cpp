@@ -5,9 +5,9 @@ FileErrCode::FileErrCode()
 
 }
 
-FileErrCode::FileErrCode(std::string fileName)
+FileErrCode::FileErrCode(std::string fileName, int &ret)
 {
-    openFile(fileName);
+    ret = openFile(fileName);
 }
 
 FileErrCode::~FileErrCode()

@@ -11,7 +11,7 @@ void openLastError()
     for(int i = 0; i < 10 && !f.getLastError(); ++i)
     {
         std::cout << i << '\n';
-        f.openFile("meow");
+        f.openFile(TEST_FILE_NAME);
     }
 }
 
@@ -23,7 +23,7 @@ void openThrowEx()
         for(int i = 0; i < 10; ++i)
         {
             std::cout << i << '\n';
-            f.openFile("meow");
+            f.openFile(TEST_FILE_NAME);
         }
     } catch(int ex) {
         std::cout << "Exception: " << ex << '\n';
@@ -38,7 +38,7 @@ void openErrCode()
     for(int i = 0; i < 10 && !code; ++i)
     {
         std::cout << i << '\n';
-        code = f.openFile("meow");
+        code = f.openFile(TEST_FILE_NAME);
     }
 }
 int main()
@@ -59,4 +59,8 @@ int main()
     openLastError();
     openThrowEx();
     openErrCode();
+
+
+    FileThrowEx copy = fex;
+    copy.printLine("test_copy");
 }

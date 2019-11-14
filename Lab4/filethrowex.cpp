@@ -2,12 +2,19 @@
 
 FileThrowEx::FileThrowEx()
 {
-
+    this->fileName = "";
 }
 
 FileThrowEx::FileThrowEx(std::string fileName)
 {
+    this->fileName = fileName;
     openFile(fileName);
+}
+
+FileThrowEx::FileThrowEx(const FileThrowEx &other)
+{
+    this->fileName = other.fileName + "_copy.txt";
+    openFile(this->fileName);
 }
 
 FileThrowEx::~FileThrowEx()
@@ -19,6 +26,7 @@ FileThrowEx::~FileThrowEx()
 
 void FileThrowEx::openFile(std::string fileName)
 {
+    this->fileName = fileName;
     file = fopen(fileName.c_str(), FILE_OPEN_FLAGS);
     if(file == NULL)
     {

@@ -9,7 +9,7 @@ class FileErrCode
 {
 public:
     FileErrCode();
-    FileErrCode(std::string fileName);
+    FileErrCode(std::string fileName, int &ret);
     ~FileErrCode();
 
     bool openFile(std::string fileName);

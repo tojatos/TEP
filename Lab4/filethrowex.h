@@ -10,6 +10,7 @@ class FileThrowEx
 public:
     FileThrowEx();
     FileThrowEx(std::string fileName);
+    FileThrowEx(const FileThrowEx &other);
     ~FileThrowEx();
 
     void openFile(std::string fileName);
@@ -18,6 +19,7 @@ public:
     void printManyLines(std::vector<std::string> text);
 private:
     FILE *file;
+    std::string fileName;
 };
 
 #endif // FILETHROWEX_H
