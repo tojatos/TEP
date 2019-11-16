@@ -9,11 +9,15 @@ set(SOURCES
     main.cpp
     nodestatic.cpp
     treestatic.cpp
+    nodedynamic.cpp
+    treedynamic.cpp
     )
 set(HEADERS
     constants.h
     nodestatic.h
     treestatic.h
+    nodedynamic.h
+    treedynamic.h
     )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
