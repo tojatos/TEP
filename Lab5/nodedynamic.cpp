@@ -3,12 +3,16 @@
 
 NodeDynamic::~NodeDynamic()
 {
+    int childrenSize = children.size();
+    for(int i = 0; i < childrenSize; ++i)
+    {
+        delete children[i];
+    }
 }
 
 void NodeDynamic::addNewChild()
 {
-    NodeDynamic x;
-    x.parents.push_back(*this);
+    NodeDynamic* x = new NodeDynamic;
     children.push_back(x);
 }
 
@@ -16,7 +20,7 @@ NodeDynamic *NodeDynamic::getChild(int childOffset)
 {
     if(childOffset < 0 || childOffset >= getChildrenNumber())
         return NULL;
-    return &children[childOffset];
+    return children[childOffset];
 }
 
 void NodeDynamic::printAllBelow()
@@ -25,16 +29,6 @@ void NodeDynamic::printAllBelow()
     int n = getChildrenNumber();
     for(int i = 0; i < n; ++i)
     {
-        children[i].printAllBelow();
-    }
-}
-
-void NodeDynamic::printUp()
-{
-    print();
-    int parentsSize = this->parents.size();
-    for(int i = 0; i < parentsSize; ++i)
-    {
-        this->parents[i].printUp();
+        children[i]->printAllBelow();
     }
 }

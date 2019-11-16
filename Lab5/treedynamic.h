@@ -9,10 +9,10 @@ public:
     TreeDynamic();
     ~TreeDynamic();
 
-    NodeDynamic *getRoot() { return(&root); };
+    NodeDynamic *getRoot() { return root; };
     void printTree();
 private:
-    NodeDynamic root;
+    NodeDynamic *root;
 };
 
 #endif // TREEDYNAMIC_H

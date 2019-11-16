@@ -6,7 +6,7 @@
 class NodeStatic
 {
 public:
-    NodeStatic() { val = 0; };
+    NodeStatic() { val = 0; parent=NULL;};
     ~NodeStatic();
 
     void setValue(int newVal) { val = newVal; };
@@ -21,7 +21,7 @@ public:
 
 private:
     std::vector<NodeStatic> children;
-    std::vector<NodeStatic> parents;
+    NodeStatic* parent;
     int val;
 };
 
