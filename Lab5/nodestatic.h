@@ -6,7 +6,7 @@
 class NodeStatic
 {
 public:
-    NodeStatic() { val = 0; parent = NULL; };
+    NodeStatic() { val = 0; };
     ~NodeStatic();
 
     void setValue(int newVal) { val = newVal; };
@@ -14,8 +14,6 @@ public:
     int getChildrenNumber() { return children.size(); }
     void addNewChild();
     NodeStatic *getChild(int childOffset);
-    void setParent(NodeStatic *parent) { this->parent = parent; };
-    NodeStatic *getParent() { return this->parent; };
 
     void print() { std::cout << " " << val; }
     void printAllBelow();
@@ -23,8 +21,8 @@ public:
 
 private:
     std::vector<NodeStatic> children;
+    std::vector<NodeStatic> parents;
     int val;
-    NodeStatic *parent;
 };
 
 #endif // NODESTATIC_H

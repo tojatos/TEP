@@ -8,10 +8,12 @@ set(PROJECT_NAME Lab5)
 set(SOURCES
     main.cpp
     nodestatic.cpp
+    treestatic.cpp
     )
 set(HEADERS
     constants.h
     nodestatic.h
+    treestatic.h
     )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})

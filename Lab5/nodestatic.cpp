@@ -8,7 +8,7 @@ NodeStatic::~NodeStatic()
 void NodeStatic::addNewChild()
 {
     NodeStatic x;
-    x.setParent(this);
+    x.parents.push_back(*this);
     children.push_back(x);
 }
 
@@ -27,11 +27,14 @@ void NodeStatic::printAllBelow()
     {
         children[i].printAllBelow();
     }
-
 }
 
 void NodeStatic::printUp()
 {
-    this->parent->printAllBelow();
-    //TODO: vector of parents
+    print();
+    int parentsSize = this->parents.size();
+    for(int i = 0; i < parentsSize; ++i)
+    {
+        this->parents[i].printUp();
+    }
 }
