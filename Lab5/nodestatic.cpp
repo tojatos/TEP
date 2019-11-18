@@ -8,8 +8,13 @@ NodeStatic::~NodeStatic()
 void NodeStatic::addNewChild()
 {
     NodeStatic x;
-    x.parent = this;
-    children.push_back(x);
+    addNewChild(x);
+}
+
+void NodeStatic::addNewChild(NodeStatic &child)
+{
+    child.parent = this;
+    children.push_back(child);
 }
 
 NodeStatic *NodeStatic::getChild(int childOffset)
@@ -17,6 +22,16 @@ NodeStatic *NodeStatic::getChild(int childOffset)
     if(childOffset < 0 || childOffset >= getChildrenNumber())
         return NULL;
     return &children[childOffset];
+}
+
+NodeStatic *NodeStatic::getParent()
+{
+    return this->parent;
+}
+
+void NodeStatic::setParent(NodeStatic *newParent)
+{
+    this->parent = newParent;
 }
 
 void NodeStatic::printAllBelow()

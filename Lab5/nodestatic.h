@@ -13,7 +13,11 @@ public:
 
     int getChildrenNumber() { return children.size(); }
     void addNewChild();
+    void addNewChild(NodeStatic &child);
     NodeStatic *getChild(int childOffset);
+    NodeStatic *getParent();
+    void setParent(NodeStatic* newParent);
+    std::vector<NodeStatic> *getChildren() { return &children; };
 
     void print() { std::cout << " " << val; }
     void printAllBelow();

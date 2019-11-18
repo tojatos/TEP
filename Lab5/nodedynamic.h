@@ -13,13 +13,18 @@ public:
 
     int getChildrenNumber() { return children.size(); }
     void addNewChild();
+    void addNewChild(NodeDynamic* child);
     NodeDynamic *getChild(int childOffset);
+    NodeDynamic *getParent();
+    void setParent(NodeDynamic* newParent);
+    std::vector<NodeDynamic*> *getChildren() { return &children; };
 
     void print() { std::cout << " " << val; }
     void printAllBelow();
 
 private:
     std::vector<NodeDynamic*> children;
+    NodeDynamic* parent;
     int val;
 };
 

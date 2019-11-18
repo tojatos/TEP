@@ -14,3 +14,24 @@ void TreeDynamic::printTree()
 {
     root->printAllBelow();
 }
+
+bool TreeDynamic::moveSubtree(NodeDynamic *parentNode, NodeDynamic *newChildNode)
+{
+    if(parentNode == NULL || newChildNode == NULL)
+        return false;
+
+    std::vector<NodeDynamic*> *children = newChildNode->getParent()->getChildren();
+    int childrenSize = children->size();
+    bool found = false;
+    for (int i = 0; i < childrenSize && !found; ++i)
+    {
+        if((*children)[i] == newChildNode)
+        {
+            children->erase(children->begin() + i);
+            found = true;
+        }
+    }
+    parentNode->addNewChild(newChildNode);
+
+    return true;
+}

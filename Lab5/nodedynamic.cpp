@@ -12,8 +12,13 @@ NodeDynamic::~NodeDynamic()
 
 void NodeDynamic::addNewChild()
 {
-    NodeDynamic* x = new NodeDynamic;
-    children.push_back(x);
+    addNewChild(new NodeDynamic);
+}
+
+void NodeDynamic::addNewChild(NodeDynamic *child)
+{
+    child->parent = this;
+    children.push_back(child);
 }
 
 NodeDynamic *NodeDynamic::getChild(int childOffset)
@@ -21,6 +26,16 @@ NodeDynamic *NodeDynamic::getChild(int childOffset)
     if(childOffset < 0 || childOffset >= getChildrenNumber())
         return NULL;
     return children[childOffset];
+}
+
+NodeDynamic *NodeDynamic::getParent()
+{
+    return this->parent;
+}
+
+void NodeDynamic::setParent(NodeDynamic *newParent)
+{
+    this->parent = newParent;
 }
 
 void NodeDynamic::printAllBelow()

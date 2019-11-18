@@ -11,6 +11,7 @@ public:
 
     NodeStatic *getRoot() { return(&root); };
     void printTree();
+    bool moveSubtree(NodeStatic *parentNode, NodeStatic *newChildNode);
 private:
     NodeStatic root;
 };

@@ -11,6 +11,7 @@ public:
 
     NodeDynamic *getRoot() { return root; };
     void printTree();
+    bool moveSubtree(NodeDynamic *parentNode, NodeDynamic *newChildNode);
 private:
     NodeDynamic *root;
 };
