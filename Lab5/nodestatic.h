@@ -10,10 +10,10 @@ public:
     ~NodeStatic();
 
     void setValue(int newVal) { val = newVal; };
-
     int getChildrenNumber() { return children.size(); }
     void addNewChild();
     void addNewChild(NodeStatic &child);
+    void assignParents();
     NodeStatic *getChild(int childOffset);
     NodeStatic *getParent();
     void setParent(NodeStatic* newParent);

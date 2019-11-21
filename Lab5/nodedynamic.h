@@ -6,7 +6,7 @@
 class NodeDynamic
 {
 public:
-    NodeDynamic() { val = 0; };
+    NodeDynamic() { val = 0; parent=NULL; };
     ~NodeDynamic();
 
     void setValue(int newVal) { val = newVal; };

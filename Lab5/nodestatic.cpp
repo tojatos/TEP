@@ -17,6 +17,16 @@ void NodeStatic::addNewChild(NodeStatic &child)
     children.push_back(child);
 }
 
+void NodeStatic::assignParents()
+{
+    int childrenSize = getChildrenNumber();
+    for(int i = 0; i < childrenSize; ++i)
+    {
+        children[i].parent = this;
+        children[i].assignParents();
+    }
+}
+
 NodeStatic *NodeStatic::getChild(int childOffset)
 {
     if(childOffset < 0 || childOffset >= getChildrenNumber())

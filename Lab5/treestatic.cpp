@@ -23,6 +23,7 @@ bool TreeStatic::moveSubtree(NodeStatic *parentNode, NodeStatic *newChildNode)
     std::vector<NodeStatic> *children = newChildNode->getParent()->getChildren();
     NodeStatic copiedNode = *newChildNode;
     parentNode->addNewChild(copiedNode);
+    parentNode->assignParents();
 
     int childrenSize = children->size();
     bool found = false;
@@ -34,10 +35,6 @@ bool TreeStatic::moveSubtree(NodeStatic *parentNode, NodeStatic *newChildNode)
             found = true;
         }
     }
-//    NodeStatic newChild = *newChildNode;
-//    newChild.setParent(parentNode);
-//    parentNode->getChildren()->push_back(newChild);
-
 
     return true;
 }
