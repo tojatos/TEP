@@ -47,3 +47,13 @@ void NodeDynamic::printAllBelow()
         children[i]->printAllBelow();
     }
 }
+
+
+void NodeDynamic::printUp()
+{
+    print();
+    if(this->parent != NULL)
+    {
+        this->parent->printUp();
+    }
+}

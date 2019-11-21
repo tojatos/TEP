@@ -64,6 +64,11 @@ void  dynamicTreeTest()
     tree.printTree();
 
     std::cout << '\n';
+
+    root->getChild(0)->getChild(1)->printUp();
+
+    std::cout << '\n';
+
 }
 
 void moveStaticTest()
@@ -112,6 +117,8 @@ void moveStaticTest()
     std::cout << '\n';
     tree2.printTree();
     std::cout << '\n';
+//    root->getChild(2)->getChild(0)->printUp();
+    std::cout << '\n';
 }
 
 void moveDynamicTest()
@@ -131,6 +138,7 @@ void moveDynamicTest()
     root->getChild(2)->setValue(3);
     root->getChild(2)->addNewChild();
     root->getChild(2)->getChild(0)->setValue(4);
+//    root->getChild(2)->getChild(0)->printUp();
 
     tree.printTree();
 
@@ -159,6 +167,8 @@ void moveDynamicTest()
     tree.printTree();
     std::cout << '\n';
     tree2.printTree();
+    std::cout << '\n';
+//    root->getChild(2)->getChild(0)->printUp();
     std::cout << '\n';
 }
 

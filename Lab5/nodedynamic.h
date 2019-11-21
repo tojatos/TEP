@@ -21,6 +21,7 @@ public:
 
     void print() { std::cout << " " << val; }
     void printAllBelow();
+    void printUp();
 
 private:
     std::vector<NodeDynamic*> children;
