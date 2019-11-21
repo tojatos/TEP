@@ -38,6 +38,23 @@ void NodeDynamic::setParent(NodeDynamic *newParent)
     this->parent = newParent;
 }
 
+void NodeDynamic::prettyPrintBelow(int depth)
+{
+    for(int i = 0; i < depth; ++i)
+    {
+        if(i > 0) std::cout << "   ";
+        std::cout << "|";
+    }
+    if(depth>0) std::cout << "---";
+    std::cout << this->val << '\n';
+    int n = getChildrenNumber();
+    for(int i = 0; i < n; ++i)
+    {
+        children[i]->prettyPrintBelow(depth+1);
+    }
+
+}
+
 void NodeDynamic::printAllBelow()
 {
     print();

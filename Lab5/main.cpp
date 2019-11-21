@@ -170,11 +170,41 @@ void moveDynamicTest()
     std::cout << '\n';
 }
 
+void labModification()
+{
+    TreeDynamic tree;
+    NodeDynamic *root = tree.getRoot();
+
+    root->setValue(10);
+    root->addNewChild();
+    root->addNewChild();
+    root->addNewChild();
+
+    root->getChild(0)->setValue(5);
+    root->getChild(1)->setValue(3);
+    root->getChild(2)->setValue(2);
+    root->getChild(0)->addNewChild();
+    root->getChild(0)->addNewChild();
+    root->getChild(0)->getChild(0)->setValue(3);
+    root->getChild(0)->getChild(1)->setValue(4);
+    root->getChild(2)->addNewChild();
+    root->getChild(2)->addNewChild();
+    root->getChild(2)->getChild(0)->setValue(7);
+    root->getChild(2)->getChild(1)->setValue(8);
+    root->getChild(2)->getChild(0)->addNewChild();
+    root->getChild(2)->getChild(0)->getChild(0)->setValue(9);
+
+    tree.printPrettyTree();
+
+    std::cout << '\n';
+}
+
 int main()
 {
-    staticTreeTest();
-    dynamicTreeTest();
-    moveStaticTest();
-    moveDynamicTest();
+//    staticTreeTest();
+//    dynamicTreeTest();
+//    moveStaticTest();
+//    moveDynamicTest();
+    labModification();
     return 0;
 }

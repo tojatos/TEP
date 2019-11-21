@@ -20,6 +20,7 @@ public:
     std::vector<NodeDynamic*> *getChildren() { return &children; };
 
     void print() { std::cout << " " << val; }
+    void prettyPrintBelow(int depth);
     void printAllBelow();
     void printUp();
 

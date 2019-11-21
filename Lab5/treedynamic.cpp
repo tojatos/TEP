@@ -15,6 +15,11 @@ void TreeDynamic::printTree()
     root->printAllBelow();
 }
 
+void TreeDynamic::printPrettyTree()
+{
+    root->prettyPrintBelow(0);
+}
+
 bool TreeDynamic::moveSubtree(NodeDynamic *parentNode, NodeDynamic *newChildNode)
 {
     if(parentNode == NULL || newChildNode == NULL)
