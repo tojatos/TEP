@@ -23,6 +23,7 @@ public:
     void print() { std::cout << " " << val; }
     void prettyPrintBelow(int depth);
     void printAllBelow();
+    T sumAllBelow();
     void printUp();
 
 private:
@@ -101,6 +102,18 @@ void NodeDynamic<T>::printAllBelow()
     {
         children[i]->printAllBelow();
     }
+}
+
+template<typename T>
+T NodeDynamic<T>::sumAllBelow()
+{
+    int ret = this->val;
+    int n = getChildrenNumber();
+    for(int i = 0; i < n; ++i)
+    {
+        ret += children[i]->sumAllBelow();
+    }
+    return ret;
 }
 
 template<typename T>

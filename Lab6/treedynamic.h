@@ -11,6 +11,7 @@ public:
     ~TreeDynamic();
 
     NodeDynamic<T> *getRoot() { return root; };
+    T *sum();
     void printTree();
     void printPrettyTree();
     bool moveSubtree(NodeDynamic<T> *parentNode, NodeDynamic<T> *newChildNode);
@@ -28,6 +29,14 @@ template<typename T>
 TreeDynamic<T>::~TreeDynamic()
 {
     delete root;
+}
+
+template<typename T>
+T *TreeDynamic<T>::sum()
+{
+    T* ret = new T;
+    *ret = root->sumAllBelow();
+    return ret;
 }
 
 template<typename T>
