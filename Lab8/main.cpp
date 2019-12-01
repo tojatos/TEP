@@ -58,10 +58,13 @@ Tab createTab()
 void msTest()
 {
     Tab tab = createTab();
+    Tab other;
+    other = std::move(tab);
 }
 
 int main()
 {
     msTest();
+//    test();
     return 0;
 }

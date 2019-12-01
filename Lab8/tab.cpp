@@ -15,12 +15,24 @@ Tab::Tab(Tab &&other)
     std::cout << "MOVE ";
 }
 
-Tab Tab::operator=(const Tab &other)
+Tab& Tab::operator=(const Tab &other)
 {
     if(tab != NULL) delete[] tab;
     copy(other);
 
     std::cout << "op= ";
+    return *this;
+}
+
+Tab& Tab::operator=(Tab &&other)
+{
+    if(tab != NULL) delete[] tab;
+    tab = other.tab;
+    size = other.size;
+    other.tab = NULL;
+
+    std::cout << "MOVE_OP ";
+    return *this;
 }
 
 Tab::~Tab()
