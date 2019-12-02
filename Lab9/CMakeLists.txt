@@ -13,6 +13,8 @@ set(HEADERS
     constants.h
     mscnproblem.h
     matrix.h
+    mysmartpointer.h
+    refcounter.h
     )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
