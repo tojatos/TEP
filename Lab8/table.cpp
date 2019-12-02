@@ -23,6 +23,16 @@ Table::Table(const Table &other)
     operator=(other);
 }
 
+Table::Table(Table &&other)
+{
+    name = other.name + "_move";
+    table = other.table;
+    tableLen = other.tableLen;
+    other.table = NULL;
+
+    std::cout << "move: " << name << '\n';
+}
+
 Table::~Table()
 {
     delete[] this->table;
@@ -70,7 +80,7 @@ Table Table::operator+(Table &other)
     {
         newTable.setValue(i+this->tableLen, other.getValue(i));
     }
-    return newTable;
+    return std::move(newTable);
 }
 
 Table Table::operator-(Table &other)
@@ -99,7 +109,7 @@ Table Table::operator-(Table &other)
         newTable.setValue(i, result[i]);
     }
 
-    return newTable;
+    return std::move(newTable);
 }
 
 Table& Table::operator=(const Table &other)

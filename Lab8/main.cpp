@@ -65,6 +65,6 @@ void msTest()
 int main()
 {
     msTest();
-//    test();
+    test();
     return 0;
 }
