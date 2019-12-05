@@ -6,36 +6,35 @@ template<typename T>
 class MySmartPointer
 {
 public:
-    MySmartPointer(T *pointer)
+    MySmartPointer(T *pointer, bool is_array = false)
     {
+        this->is_array = is_array;
         this->pointer = pointer;
         counter = new RefCounter();
         counter->add();
     }
     MySmartPointer(const MySmartPointer &other)
     {
+        is_array = other.is_array;
         pointer = other.pointer;
         counter = other.counter;
         counter->add();
     }
     ~MySmartPointer()
     {
-        if(counter->dec() == 0)
-        {
-            delete pointer;
-            delete counter;
-        }
+        if(counter->dec() == 0) destroy();
     }
 
     T& operator*() { return(*pointer); }
     T* operator->() { return(pointer); }
+    T at(int offset)
+    {
+        if (!is_array) throw;
+        return *(pointer+offset);
+    }
     void operator=(const MySmartPointer &other)
     {
-        if(counter->dec() == 0)
-        {
-            delete pointer;
-            delete counter;
-        }
+        if(counter->dec() == 0) destroy();
         pointer = other.pointer;
         counter = other.counter;
         counter->add();
@@ -43,6 +42,15 @@ public:
 private:
     T *pointer;
     RefCounter* counter;
+    bool is_array;
+    void destroy()
+    {
+        delete counter;
+        if(is_array)
+            delete[] pointer;
+        else
+            delete pointer;
+    }
 };
 
 #endif // MYSMARTPOINTER_H
