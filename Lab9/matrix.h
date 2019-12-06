@@ -17,11 +17,12 @@ public:
     {
         resize(width, height);
     }
-    bool resize(int width, int height)
+    void resize(int width, int height)
     {
         this->width = width;
         this->height = height;
-        matrix = MySmartPointer<T>(new T[width*height]);
+        T* ptr = new T[width*height];
+        matrix = MySmartPointer<T>(ptr, true);
     }
     void set(T val, int i, int j)
     {
@@ -65,7 +66,7 @@ public:
         return newMatrix;
     }
 private:
-    MySmartPointer<T> matrix;
+    MySmartPointer<T> matrix = NULL;
     int width;
     int height;
 };
