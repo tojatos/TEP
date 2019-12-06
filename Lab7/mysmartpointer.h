@@ -35,6 +35,7 @@ public:
     void operator=(const MySmartPointer &other)
     {
         if(counter->dec() == 0) destroy();
+        is_array = other.is_array;
         pointer = other.pointer;
         counter = other.counter;
         counter->add();
