@@ -20,6 +20,8 @@ bool MscnProblem::setDCount(int newCount)
 
     dCount = newCount;
     cd.resize(fCount, dCount);
+    sd.resize(dCount);
+    ud.resize(dCount);
     return true;
 }
 
@@ -30,6 +32,8 @@ bool MscnProblem::setFCount(int newCount)
     fCount = newCount;
     cd.resize(fCount, dCount);
     ef.resize(mCount, fCount);
+    sf.resize(fCount);
+    uf.resize(fCount);
     return true;
 }
 bool MscnProblem::setMCount(int newCount)
@@ -39,6 +43,8 @@ bool MscnProblem::setMCount(int newCount)
     mCount = newCount;
     ef.resize(mCount, fCount);
     cm.resize(sCount, mCount);
+    sm.resize(mCount);
+    um.resize(mCount);
     return true;
 }
 bool MscnProblem::setSCount(int newCount)
@@ -47,6 +53,8 @@ bool MscnProblem::setSCount(int newCount)
 
     sCount = newCount;
     cm.resize(sCount, mCount);
+    ss.resize(sCount);
+    ps.resize(sCount);
     return true;
 }
 
@@ -55,6 +63,15 @@ bool MscnProblem::setInMatrix(Matrix<double> &mat, double value, int i, int j)
     if(value < 0) return false;
 
     mat.set(value, i, j);
+    return true;
+
+}
+
+bool MscnProblem::setInVector(std::vector<double> &vec, double value, int i)
+{
+    if(value < 0) return false;
+
+    vec[i] = value;
     return true;
 
 }
@@ -71,6 +88,39 @@ bool MscnProblem::setInEf(double value, int i, int j)
 bool MscnProblem::setInCm(double value, int i, int j)
 {
     return setInMatrix(cm, value, i, j);
+}
+
+bool MscnProblem::setInSd(double value, int i)
+{
+    return setInVector(sd, value, i);
+}
+bool MscnProblem::setInSf(double value, int i)
+{
+    return setInVector(sf, value, i);
+}
+bool MscnProblem::setInSm(double value, int i)
+{
+    return setInVector(sm, value, i);
+}
+bool MscnProblem::setInSs(double value, int i)
+{
+    return setInVector(ss, value, i);
+}
+bool MscnProblem::setInUd(double value, int i)
+{
+    return setInVector(ud, value, i);
+}
+bool MscnProblem::setInUf(double value, int i)
+{
+    return setInVector(uf, value, i);
+}
+bool MscnProblem::setInUm(double value, int i)
+{
+    return setInVector(um, value, i);
+}
+bool MscnProblem::setInPs(double value, int i)
+{
+    return setInVector(ps, value, i);
 }
 
 std::string MscnProblem::serialize()
@@ -91,6 +141,14 @@ std::string MscnProblem::serialize()
     os << serialize(sm);
     os << "\n\n";
     os << serialize(ss);
+    os << "\n\n";
+    os << serialize(ud);
+    os << "\n\n";
+    os << serialize(uf);
+    os << "\n\n";
+    os << serialize(um);
+    os << "\n\n";
+    os << serialize(ps);
     os << "\n\n";
 
     return os.str();

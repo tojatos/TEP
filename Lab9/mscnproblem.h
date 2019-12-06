@@ -20,6 +20,15 @@ public:
     bool setInEf(double value, int i, int j);
     bool setInCm(double value, int i, int j);
 
+    bool setInSd(double value, int i);
+    bool setInSf(double value, int i);
+    bool setInSm(double value, int i);
+    bool setInSs(double value, int i);
+    bool setInUd(double value, int i);
+    bool setInUf(double value, int i);
+    bool setInUm(double value, int i);
+    bool setInPs(double value, int i);
+
     std::string serialize();
     MscnProblem deserialize(std::string const &str);
 
@@ -38,11 +47,14 @@ private:
     std::vector<double> sf;
     std::vector<double> sm;
     std::vector<double> ss;
-
-    //TODO: vectors ud, uf, um, ps?
+    std::vector<double> ud;
+    std::vector<double> uf;
+    std::vector<double> um;
+    std::vector<double> ps;
 
     std::string serialize(std::vector<double> const &vec);
     bool setInMatrix(Matrix<double> &mat, double value, int i, int j);
+    bool setInVector(std::vector<double> &vec, double value, int i);
 };
 
 struct MscmQualityResult
