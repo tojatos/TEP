@@ -163,14 +163,14 @@ MscnProblem MscnProblem::deserialize(std::string const &str)
 
 void MscnProblem::save(std::string const &path)
 {
-    std::ofstream file(path);
+    std::ofstream file(path); //TODO: change to fopen
     file << serialize();
     file.close();
 }
 
 MscnProblem MscnProblem::load(std::string const &path)
 {
-    std::ifstream file(path);
+    std::ifstream file(path); //TODO: change to fopen
     std::ostringstream buffer;
     buffer << file.rdbuf();
     std::string res = buffer.str();
