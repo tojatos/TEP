@@ -2,6 +2,7 @@
 #define MATRIX_H
 #include "mysmartpointer.h"
 #include "constants.h"
+#include "streamhelper.h"
 #include <string>
 #include <sstream>
 
@@ -16,6 +17,18 @@ public:
     Matrix(int width, int height)
     {
         resize(width, height);
+    }
+    Matrix(std::istream &is)
+    {
+        is >> width >> height;
+        resize(width, height);
+        for(int i = 0; i < height; ++i)
+        {
+            for(int j = 0; j < width; ++j)
+            {
+                set(stream_get<T>(is), i, j);
+            }
+        }
     }
     void resize(int width, int height)
     {
@@ -48,22 +61,6 @@ public:
         }
 
         return os.str();
-    }
-    Matrix<T> deserialize(std::string str)
-    {
-        std::istringstream is(str);
-        is >> width >> height;
-        Matrix<T> newMatrix(width, height);
-        for(int i = 0; i < height; ++i)
-        {
-            for(int j = 0; j < width; ++j)
-            {
-                T tmp;
-                is >> tmp;
-                newMatrix.set(tmp, i, j);
-            }
-        }
-        return newMatrix;
     }
 private:
     MySmartPointer<T> matrix = NULL;

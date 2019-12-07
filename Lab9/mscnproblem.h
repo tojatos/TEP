@@ -10,6 +10,7 @@ class MscnProblem
 {
 public:
     MscnProblem();
+    MscnProblem(std::istream &is);
 
     bool setDCount(int newCount);
     bool setFCount(int newCount);
@@ -30,10 +31,8 @@ public:
     bool setInPs(double value, int i);
 
     std::string serialize();
-    MscnProblem deserialize(std::string const &str);
 
     void save(std::string const &path);
-    MscnProblem load(std::string const &path);
 private:
     int dCount;
     int fCount;

@@ -10,8 +10,23 @@ MscnProblem::MscnProblem()
     cd = Matrix<double>(fCount, dCount);
     ef = Matrix<double>(mCount, fCount);
     cm = Matrix<double>(sCount, mCount);
+    //TODO resize vectors
+}
 
 
+MscnProblem::MscnProblem(std::istream &is)
+{
+    int d, f, m, s;
+    is >> d >> f >> m >> s;
+    dCount = d;
+    fCount = f;
+    mCount = m;
+    sCount = s;
+
+    cd = Matrix<double>(is);
+    ef = Matrix<double>(is);
+    cm = Matrix<double>(is);
+    //TODO resize vectors
 }
 
 bool MscnProblem::setDCount(int newCount)
@@ -127,38 +142,31 @@ std::string MscnProblem::serialize()
 {
     std::stringstream os;
     os << dCount << ' ' << fCount << ' ' << mCount << ' ' << sCount;
-    os << "\n\n";
+    os << "\n";
     os << cd.serialize();
-    os << "\n\n";
+    os << "\n";
     os << ef.serialize();
-    os << "\n\n";
+    os << "\n";
     os << cm.serialize();
-    os << "\n\n";
+    os << "\n";
     os << serialize(sd);
-    os << "\n\n";
+    os << "\n";
     os << serialize(sf);
-    os << "\n\n";
+    os << "\n";
     os << serialize(sm);
-    os << "\n\n";
+    os << "\n";
     os << serialize(ss);
-    os << "\n\n";
+    os << "\n";
     os << serialize(ud);
-    os << "\n\n";
+    os << "\n";
     os << serialize(uf);
-    os << "\n\n";
+    os << "\n";
     os << serialize(um);
-    os << "\n\n";
+    os << "\n";
     os << serialize(ps);
-    os << "\n\n";
+    os << "\n";
 
     return os.str();
-}
-
-MscnProblem MscnProblem::deserialize(std::string const &str)
-{
-    //TODO: deserialize
-    throw;
-
 }
 
 void MscnProblem::save(std::string const &path)
@@ -168,22 +176,15 @@ void MscnProblem::save(std::string const &path)
     file.close();
 }
 
-MscnProblem MscnProblem::load(std::string const &path)
-{
-    std::ifstream file(path); //TODO: change to fopen
-    std::ostringstream buffer;
-    buffer << file.rdbuf();
-    std::string res = buffer.str();
-    return deserialize(res);
-}
-
 std::string MscnProblem::serialize(const std::vector<double> &vec)
 {
     std::ostringstream buffer;
     size_t size = vec.size();
+    buffer << size << '\n';
     for (size_t i = 0; i < size; ++i)
     {
         buffer << vec[i] << ' ';
     }
+    buffer << '\n';
     return buffer.str();
 }

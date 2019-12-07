@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include "constants.h"
 #include "mscnproblem.h"
 
@@ -26,7 +27,14 @@ void test()
         for(int j = 0; j < testSCount; ++j)
             problem.setInCm(i*testMCount+j, i, j);
 
+    problem.setInPs(4, 3);
+    problem.setInPs(2, 0);
+    problem.setInUd(1, 1);
+
     problem.save("test.txt");
+    std::ifstream file("test.txt");
+    MscnProblem test(file);
+    test.save("test2.txt");
 }
 
 int main()
