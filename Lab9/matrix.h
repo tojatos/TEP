@@ -34,8 +34,7 @@ public:
     {
         this->width = width;
         this->height = height;
-        T* ptr = new T[width*height];
-        matrix = MySmartPointer<T>(ptr, true);
+        matrix = MySmartPointer<T>(new T[width*height](), true);
     }
     void set(T val, int i, int j)
     {
