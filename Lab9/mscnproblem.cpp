@@ -90,6 +90,36 @@ bool MscnProblem::setInVector(std::vector<double> &vec, double value, int i)
     return true;
 
 }
+
+std::ostream& operator<<(std::ostream &os, const MscnProblem &p)
+{
+    os << p.dCount << ' ' << p.fCount << ' ' << p.mCount << ' ' << p.sCount;
+    os << "\n";
+    os << p.cd;
+    os << "\n";
+    os << p.ef;
+    os << "\n";
+    os << p.cm;
+    os << "\n";
+    os << p.sd;
+    os << "\n";
+    os << p.sf;
+    os << "\n";
+    os << p.sm;
+    os << "\n";
+    os << p.ss;
+    os << "\n";
+    os << p.ud;
+    os << "\n";
+    os << p.uf;
+    os << "\n";
+    os << p.um;
+    os << "\n";
+    os << p.ps;
+    os << "\n";
+
+    return os;
+}
 bool MscnProblem::setInCd(double value, int i, int j)
 {
     return setInMatrix(cd, value, i, j);
@@ -138,53 +168,9 @@ bool MscnProblem::setInPs(double value, int i)
     return setInVector(ps, value, i);
 }
 
-std::string MscnProblem::serialize()
-{
-    std::stringstream os;
-    os << dCount << ' ' << fCount << ' ' << mCount << ' ' << sCount;
-    os << "\n";
-    os << cd.serialize();
-    os << "\n";
-    os << ef.serialize();
-    os << "\n";
-    os << cm.serialize();
-    os << "\n";
-    os << serialize(sd);
-    os << "\n";
-    os << serialize(sf);
-    os << "\n";
-    os << serialize(sm);
-    os << "\n";
-    os << serialize(ss);
-    os << "\n";
-    os << serialize(ud);
-    os << "\n";
-    os << serialize(uf);
-    os << "\n";
-    os << serialize(um);
-    os << "\n";
-    os << serialize(ps);
-    os << "\n";
-
-    return os.str();
-}
-
 void MscnProblem::save(std::string const &path)
 {
     std::ofstream file(path); //TODO: change to fopen
-    file << serialize();
+    file << *this;
     file.close();
-}
-
-std::string MscnProblem::serialize(const std::vector<double> &vec)
-{
-    std::ostringstream buffer;
-    size_t size = vec.size();
-    buffer << size << '\n';
-    for (size_t i = 0; i < size; ++i)
-    {
-        buffer << vec[i] << ' ';
-    }
-    buffer << '\n';
-    return buffer.str();
 }

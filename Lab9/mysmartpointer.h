@@ -27,7 +27,7 @@ public:
 
     T& operator*() { return(*pointer); }
     T* operator->() { return(pointer); }
-    T& operator[](int i)
+    T& operator[](int i) const
     {
         if (!is_array) throw;
         return pointer[i];

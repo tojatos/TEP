@@ -41,26 +41,24 @@ public:
     {
         matrix[i * width + j] = val;
     }
-    T get(int i, int j)
+    T get(int i, int j) const
     {
         return matrix[i * width + j];
     }
 
-    std::string serialize()
+    friend std::ostream& operator<< (std::ostream &os, const Matrix &matrix)
     {
-        std::ostringstream os;
-        os << width << ' ' << height;
+        os << matrix.width << ' ' << matrix.height;
         os << '\n';
-        for(int i = 0; i < height; ++i)
+        for(int i = 0; i < matrix.height; ++i)
         {
-            for(int j = 0; j < width; ++j)
+            for(int j = 0; j < matrix.width; ++j)
             {
-                os << get(i, j) << ' ';
+                os << matrix.get(i, j) << ' ';
             }
             os << '\n';
         }
-
-        return os.str();
+        return os;
     }
 private:
     MySmartPointer<T> matrix = NULL;

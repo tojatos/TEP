@@ -33,6 +33,8 @@ public:
     std::string serialize();
 
     void save(std::string const &path);
+
+    friend std::ostream& operator<< (std::ostream &os, const MscnProblem &problem);
 private:
     int dCount;
     int fCount;
