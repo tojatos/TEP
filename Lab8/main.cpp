@@ -52,7 +52,14 @@ Tab createTab()
 {
     Tab result;
     result.setSize(5);
-    return (std::move(result));
+    return std::move(result);
+}
+
+Table createTable()
+{
+    Table result;
+    result.setNewSize(5);
+    return std::move(result);
 }
 
 void msTest()
@@ -62,9 +69,20 @@ void msTest()
     other = std::move(tab);
 }
 
+void test2()
+{
+    Table tab = createTable();
+    tab.getValue(0);
+    Table other;
+    other.getValue(0);
+    other = std::move(tab);
+    other.getValue(0);
+}
+
 int main()
 {
-    msTest();
-    test();
+//    msTest();
+//    test();
+    test2();
     return 0;
 }
