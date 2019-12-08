@@ -16,6 +16,7 @@ set(HEADERS
     mysmartpointer.h
     refcounter.h
     streamhelper.h
+    matrixhelper.h
     )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})

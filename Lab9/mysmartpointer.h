@@ -32,6 +32,7 @@ public:
         if (!is_array) throw;
         return pointer[i];
     }
+    T* get() const { return pointer; }
     T at(int offset)
     {
         if (!is_array) throw;

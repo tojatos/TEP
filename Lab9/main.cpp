@@ -2,6 +2,7 @@
 #include <sstream>
 #include "constants.h"
 #include "mscnproblem.h"
+#include "mysmartpointer.h"
 
 void test()
 {
@@ -38,6 +39,22 @@ void test()
     test.save("test2.txt");
     MscnProblem test3;
     test3.save("test3.txt");
+
+    int err;
+    MySmartPointer<double> solution(new double[6] {5, 6, 4, 5, 3, 2}, true);
+    MySmartPointer<double> solution2(new double[17](), true);
+
+//    std::cerr << problem.constraintsSatisfied(solution.get(), 6, err) << '\n';
+//    std::cerr << err << '\n';
+
+    std::cerr << problem.constraintsSatisfied(solution2.get(), 17, err) << '\n';
+    std::cerr << problem.getQuality(solution2.get(), 17, err) << '\n';
+    std::cerr << err << '\n';
+
+//    solution2[0] = -1;
+
+//    std::cerr << problem.constraintsSatisfied(solution2.get(), 17, err) << '\n';
+//    std::cerr << err << '\n';
 }
 
 int main()
