@@ -26,7 +26,15 @@ MscnProblem::MscnProblem(std::istream &is)
     cd = Matrix<double>(is);
     ef = Matrix<double>(is);
     cm = Matrix<double>(is);
-    //TODO resize vectors
+
+    sd = deserialize_vec<double>(is);
+    sf = deserialize_vec<double>(is);
+    sm = deserialize_vec<double>(is);
+    ss = deserialize_vec<double>(is);
+    ud = deserialize_vec<double>(is);
+    uf = deserialize_vec<double>(is);
+    um = deserialize_vec<double>(is);
+    ps = deserialize_vec<double>(is);
 }
 
 bool MscnProblem::setDCount(int newCount)
