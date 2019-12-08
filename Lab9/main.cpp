@@ -36,6 +36,8 @@ void test()
     std::ifstream file("test.txt");
     MscnProblem test(file);
     test.save("test2.txt");
+    MscnProblem test3;
+    test3.save("test3.txt");
 }
 
 int main()

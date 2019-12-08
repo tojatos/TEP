@@ -10,7 +10,15 @@ MscnProblem::MscnProblem()
     cd = Matrix<double>(fCount, dCount);
     ef = Matrix<double>(mCount, fCount);
     cm = Matrix<double>(sCount, mCount);
-    //TODO resize vectors
+
+    sd.resize(dCount);
+    ud.resize(dCount);
+    sf.resize(fCount);
+    uf.resize(fCount);
+    sm.resize(mCount);
+    um.resize(mCount);
+    ss.resize(sCount);
+    ps.resize(sCount);
 }
 
 
