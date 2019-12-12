@@ -2,6 +2,7 @@
 #define MSCNPROBLEM_H
 #include <string>
 #include <vector>
+#include <array>
 #include <fstream>
 #include <sstream>
 #include "matrix.h"
@@ -38,6 +39,7 @@ public:
     bool setInUm(double value, int i);
     bool setInPs(double value, int i);
 
+    std::vector<std::array<double, 2>> getMinMaxValues();
     double getQuality(double *solution, int arrSize, int &errorCode);
     bool constraintsSatisfied(double *solution, int arrSize, int &errorCode);
 

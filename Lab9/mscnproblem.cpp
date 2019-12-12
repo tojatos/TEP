@@ -274,6 +274,25 @@ bool MscnProblem::setInPs(double value, int i)
     return setInVector(ps, value, i);
 }
 
+std::vector<std::array<double, 2>> MscnProblem::getMinMaxValues()
+{
+    std::vector<std::array<double, 2>> res;
+
+    for(int i = 0; i < dCount; ++i)
+        for(int j = 0; j < fCount; ++j)
+            res.push_back({0, sd[i]});
+
+    for(int i = 0; i < fCount; ++i)
+        for(int j = 0; j < mCount; ++j)
+            res.push_back({0, sf[i]});
+
+    for(int i = 0; i < mCount; ++i)
+        for(int j = 0; j < sCount; ++j)
+            res.push_back({0, std::max(sm[i], ss[i])});
+
+    return res;
+}
+
 double MscnProblem::getQuality(double *solution, int arrSize, int &errorCode)
 {
     if((errorCode = technicalCheck(solution, arrSize)) != 0) return 0;

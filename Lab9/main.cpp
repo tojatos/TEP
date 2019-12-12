@@ -32,6 +32,10 @@ void test()
     problem.setInPs(2, 0);
     problem.setInUd(1, 1);
     problem.setInUf(9, 0);
+    problem.setInSd(1, 1);
+    problem.setInSf(9, 0);
+    problem.setInSs(4, 0);
+    problem.setInSs(6, 1);
 
     problem.save("test.txt");
     std::ifstream file("test.txt");
@@ -49,7 +53,11 @@ void test()
 
     std::cerr << problem.constraintsSatisfied(solution2.get(), 17, err) << '\n';
     std::cerr << problem.getQuality(solution2.get(), 17, err) << '\n';
-    std::cerr << err << '\n';
+    for(auto i : problem.getMinMaxValues())
+    {
+        std::cerr << i[0] << ' ' << i[1] << '\n';
+    }
+//    std::cerr << err << '\n';
 
 //    solution2[0] = -1;
 
