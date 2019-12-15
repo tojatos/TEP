@@ -3,6 +3,7 @@
 #include "constants.h"
 #include "mscnproblem.h"
 #include "mysmartpointer.h"
+#include "random.h"
 
 void test()
 {
@@ -70,9 +71,21 @@ void test()
 //    std::cerr << problem.constraintsSatisfied(solution2.get(), 17, err) << '\n';
 //    std::cerr << err << '\n';
 }
+void randTest()
+{
+    Random r;
+    for(int i = 0; i < 10; ++i)
+      std::cerr << r.next(0, 6) << ' ';
+
+    std::cerr << '\n';
+    for(int i = 0; i < 10; ++i)
+      std::cerr << r.next(0.0, 6.0) << ' ';
+
+}
 
 int main()
 {
-    test();
+//    test();
+    randTest();
     return 0;
 }

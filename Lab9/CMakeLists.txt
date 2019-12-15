@@ -8,6 +8,7 @@ set(PROJECT_NAME Lab9)
 set(SOURCES
     main.cpp
     mscnproblem.cpp
+    random.cpp
     )
 set(HEADERS
     constants.h
@@ -19,6 +20,7 @@ set(HEADERS
     refcounter.h
     streamhelper.h
     matrixhelper.h
+    random.h
     )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
