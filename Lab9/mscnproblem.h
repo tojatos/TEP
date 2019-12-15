@@ -49,6 +49,8 @@ public:
     double getQuality(double const * solution, int arrSize, int &errorCode);
     bool constraintsSatisfied(double const * solution, int arrSize, int &errorCode);
 
+    void generateInstance(int intanceSeed);
+
     std::string serialize();
 
     void save(std::string const &path);

@@ -73,14 +73,9 @@ void test()
 }
 void randTest()
 {
-    Random r;
-    for(int i = 0; i < 10; ++i)
-      std::cerr << r.next(0, 6) << ' ';
-
-    std::cerr << '\n';
-    for(int i = 0; i < 10; ++i)
-      std::cerr << r.next(0.0, 6.0) << ' ';
-
+    MscnProblem p;
+    p.generateInstance(0);
+    std::cerr << p;
 }
 
 int main()

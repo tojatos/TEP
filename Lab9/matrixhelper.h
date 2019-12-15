@@ -2,6 +2,7 @@
 #define MATRIXHELPER_H
 
 #include "matrix.h"
+#include "random.h"
 #include "table.h"
 #include <iostream>
 
@@ -62,6 +63,13 @@ inline bool setInMatrix(Matrix<Table<double>> &mat, double value, int i, int j, 
 
     mat.get(i, j)[k] = value;
     return true;
+}
+
+inline void randomize(Matrix<double> &mat, Random &r, double min, double max)
+{
+    for(int i = 0; i < mat.getHeight(); ++i)
+      for(int j = 0; j < mat.getWidth(); ++j)
+          mat.set(r.next(min, max), i, j);
 }
 
 #endif // MATRIXHELPER_H

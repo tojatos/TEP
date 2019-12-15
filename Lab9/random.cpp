@@ -5,6 +5,12 @@ Random::Random()
     rng = std::mt19937(dev());
 }
 
+Random::Random(int seed)
+{
+    rng = std::mt19937(dev());
+    rng.seed(seed);
+}
+
 int Random::next(int a, int b)
 {
     return next((unsigned long)a, (unsigned long)b);

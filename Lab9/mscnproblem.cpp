@@ -1,4 +1,5 @@
 #include "mscnproblem.h"
+#include "random.h"
 
 MscnProblem::MscnProblem()
 {
@@ -361,6 +362,22 @@ Table<Table<double>> MscnProblem::getMinMaxValues()
             tab[dCount*fCount + fCount * mCount + i*sCount + j][k] = xmminmax.get(i, j)[k];
 
     return tab;
+}
+
+void MscnProblem::generateInstance(int intanceSeed)
+{
+    Random r(intanceSeed);
+    randomize(cd, r, DEF_MSCN_RAND_MIN, DEF_MSCN_RAND_MAX);
+    randomize(cf, r, DEF_MSCN_RAND_MIN, DEF_MSCN_RAND_MAX);
+    randomize(cm, r, DEF_MSCN_RAND_MIN, DEF_MSCN_RAND_MAX);
+    randomize(sd, r, DEF_MSCN_RAND_MIN, DEF_MSCN_RAND_MAX);
+    randomize(sf, r, DEF_MSCN_RAND_MIN, DEF_MSCN_RAND_MAX);
+    randomize(sm, r, DEF_MSCN_RAND_MIN, DEF_MSCN_RAND_MAX);
+    randomize(ss, r, DEF_MSCN_RAND_MIN, DEF_MSCN_RAND_MAX);
+    randomize(ud, r, DEF_MSCN_RAND_MIN, DEF_MSCN_RAND_MAX);
+    randomize(uf, r, DEF_MSCN_RAND_MIN, DEF_MSCN_RAND_MAX);
+    randomize(um, r, DEF_MSCN_RAND_MIN, DEF_MSCN_RAND_MAX);
+    randomize(ps, r, DEF_MSCN_RAND_MIN, DEF_MSCN_RAND_MAX);
 }
 
 double MscnProblem::getQuality(double const * const solution, int arrSize, int &errorCode)

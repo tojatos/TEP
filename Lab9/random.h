@@ -6,6 +6,7 @@ class Random
 {
 public:
     Random();
+    Random(int seed);
     int next(int a, int b);
     unsigned long next(unsigned long a, unsigned long b);
     double next(double a, double b);
