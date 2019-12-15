@@ -45,4 +45,13 @@ T sumInAColumn(Matrix<T> &mat, int column)
     return res;
 }
 
+template <typename T>
+bool setInMatrix(Matrix<T> &mat, T value, int i, int j)
+{
+    if(value < 0) return false;
+
+    mat.set(value, i, j);
+    return true;
+}
+
 #endif // MATRIXHELPER_H

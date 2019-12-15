@@ -23,25 +23,39 @@ MscnProblem::MscnProblem()
 
 MscnProblem::MscnProblem(std::istream &is)
 {
-    int d, f, m, s;
-    is >> d >> f >> m >> s;
-    dCount = d;
-    fCount = f;
-    mCount = m;
-    sCount = s;
+    stream_get<std::string>(is);
+    dCount = stream_get<int>(is);
+    stream_get<std::string>(is);
+    fCount = stream_get<int>(is);
+    stream_get<std::string>(is);
+    mCount = stream_get<int>(is);
+    stream_get<std::string>(is);
+    sCount = stream_get<int>(is);
 
-    cd = Matrix<double>(is);
-    cf = Matrix<double>(is);
-    cm = Matrix<double>(is);
+    stream_get<std::string>(is);
+    sd = Table<double>(is, dCount);
+    stream_get<std::string>(is);
+    sf = Table<double>(is, fCount);
+    stream_get<std::string>(is);
+    sm = Table<double>(is, mCount);
+    stream_get<std::string>(is);
+    ss = Table<double>(is, sCount);
 
-    sd = deserialize_vec<double>(is);
-    sf = deserialize_vec<double>(is);
-    sm = deserialize_vec<double>(is);
-    ss = deserialize_vec<double>(is);
-    ud = deserialize_vec<double>(is);
-    uf = deserialize_vec<double>(is);
-    um = deserialize_vec<double>(is);
-    ps = deserialize_vec<double>(is);
+    stream_get<std::string>(is);
+    cd = Matrix<double>(is, fCount, dCount);
+    stream_get<std::string>(is);
+    cf = Matrix<double>(is, mCount, fCount);
+    stream_get<std::string>(is);
+    cm = Matrix<double>(is, sCount, mCount);
+
+    stream_get<std::string>(is);
+    ud = Table<double>(is, dCount);
+    stream_get<std::string>(is);
+    uf = Table<double>(is, fCount);
+    stream_get<std::string>(is);
+    um = Table<double>(is, mCount);
+    stream_get<std::string>(is);
+    ps = Table<double>(is, sCount);
 }
 
 bool MscnProblem::setDCount(int newCount)
@@ -87,24 +101,7 @@ bool MscnProblem::setSCount(int newCount)
     return true;
 }
 
-bool MscnProblem::setInMatrix(Matrix<double> &mat, double value, int i, int j)
-{
-    if(value < 0) return false;
-
-    mat.set(value, i, j);
-    return true;
-
-}
-bool MscnProblem::setInVector(std::vector<double> &vec, double value, int i)
-{
-    if(value < 0) return false;
-
-    vec[i] = value;
-    return true;
-
-}
-
-int MscnProblem::technicalCheck(double *solution, int arrSize)
+int MscnProblem::technicalCheck(double const * const solution, int arrSize)
 {
     if(solution == NULL) return 1;
 
@@ -173,7 +170,7 @@ double MscnProblem::getProfit(Matrix<double> &xd, Matrix<double> &xf, Matrix<dou
     return getP(xm) - getKt(xd, xf, xm) - getKu(xd, xf, xm);
 }
 
-MscnSolution MscnProblem::parseSolution(double *solution)
+MscnSolution MscnProblem::parseSolution(double const * const solution)
 {
     Matrix<double> xd(fCount, dCount);
     Matrix<double> xf(mCount, fCount);
@@ -200,30 +197,43 @@ MscnSolution MscnProblem::parseSolution(double *solution)
 
 std::ostream& operator<<(std::ostream &os, const MscnProblem &p)
 {
-    os << p.dCount << ' ' << p.fCount << ' ' << p.mCount << ' ' << p.sCount;
-    os << "\n";
-    os << p.cd;
-    os << "\n";
-    os << p.cf;
-    os << "\n";
-    os << p.cm;
+    os << 'D' << ' ' << p.dCount << '\n';
+    os << 'F' << ' ' << p.fCount << '\n';
+    os << 'M' << ' ' << p.mCount << '\n';
+    os << 'S' << ' ' << p.sCount << '\n';
+    os << "sd";
     os << "\n";
     os << p.sd;
+    os << "sf";
     os << "\n";
     os << p.sf;
+    os << "sm";
     os << "\n";
     os << p.sm;
+    os << "ss";
     os << "\n";
     os << p.ss;
+    os << "cd";
+    os << "\n";
+    os << p.cd;
+    os << "cf";
+    os << "\n";
+    os << p.cf;
+    os << "cm";
+    os << "\n";
+    os << p.cm;
+    os << "ud";
     os << "\n";
     os << p.ud;
+    os << "uf";
     os << "\n";
     os << p.uf;
+    os << "um";
     os << "\n";
     os << p.um;
+    os << "p";
     os << "\n";
     os << p.ps;
-    os << "\n";
 
     return os;
 }
@@ -243,35 +253,35 @@ bool MscnProblem::setInCm(double value, int i, int j)
 
 bool MscnProblem::setInSd(double value, int i)
 {
-    return setInVector(sd, value, i);
+    return setInTable(sd, value, i);
 }
 bool MscnProblem::setInSf(double value, int i)
 {
-    return setInVector(sf, value, i);
+    return setInTable(sf, value, i);
 }
 bool MscnProblem::setInSm(double value, int i)
 {
-    return setInVector(sm, value, i);
+    return setInTable(sm, value, i);
 }
 bool MscnProblem::setInSs(double value, int i)
 {
-    return setInVector(ss, value, i);
+    return setInTable(ss, value, i);
 }
 bool MscnProblem::setInUd(double value, int i)
 {
-    return setInVector(ud, value, i);
+    return setInTable(ud, value, i);
 }
 bool MscnProblem::setInUf(double value, int i)
 {
-    return setInVector(uf, value, i);
+    return setInTable(uf, value, i);
 }
 bool MscnProblem::setInUm(double value, int i)
 {
-    return setInVector(um, value, i);
+    return setInTable(um, value, i);
 }
 bool MscnProblem::setInPs(double value, int i)
 {
-    return setInVector(ps, value, i);
+    return setInTable(ps, value, i);
 }
 
 std::vector<std::array<double, 2>> MscnProblem::getMinMaxValues()
@@ -293,7 +303,7 @@ std::vector<std::array<double, 2>> MscnProblem::getMinMaxValues()
     return res;
 }
 
-double MscnProblem::getQuality(double *solution, int arrSize, int &errorCode)
+double MscnProblem::getQuality(double const * const solution, int arrSize, int &errorCode)
 {
     if((errorCode = technicalCheck(solution, arrSize)) != 0) return 0;
 
@@ -302,7 +312,7 @@ double MscnProblem::getQuality(double *solution, int arrSize, int &errorCode)
     return getProfit(s.xd, s.xf, s.xm);
 }
 
-bool MscnProblem::constraintsSatisfied(double *solution, int arrSize, int &errorCode)
+bool MscnProblem::constraintsSatisfied(double const * const solution, int arrSize, int &errorCode)
 {
     if((errorCode = technicalCheck(solution, arrSize)) != 0) return false;
 

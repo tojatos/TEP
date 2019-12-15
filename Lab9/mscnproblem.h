@@ -1,12 +1,14 @@
 #ifndef MSCNPROBLEM_H
 #define MSCNPROBLEM_H
 #include <string>
-#include <vector>
 #include <array>
 #include <fstream>
 #include <sstream>
 #include "matrix.h"
+#include "table.h"
 #include "matrixhelper.h"
+#include "streamhelper.h"
+#include "tablehelper.h"
 
 struct MscnSolution
 {
@@ -40,8 +42,8 @@ public:
     bool setInPs(double value, int i);
 
     std::vector<std::array<double, 2>> getMinMaxValues();
-    double getQuality(double *solution, int arrSize, int &errorCode);
-    bool constraintsSatisfied(double *solution, int arrSize, int &errorCode);
+    double getQuality(double const * solution, int arrSize, int &errorCode);
+    bool constraintsSatisfied(double const * solution, int arrSize, int &errorCode);
 
     std::string serialize();
 
@@ -57,23 +59,21 @@ private:
     Matrix<double> cf;
     Matrix<double> cm;
 
-    std::vector<double> sd;
-    std::vector<double> sf;
-    std::vector<double> sm;
-    std::vector<double> ss;
-    std::vector<double> ud;
-    std::vector<double> uf;
-    std::vector<double> um;
-    std::vector<double> ps;
+    Table<double> sd;
+    Table<double> sf;
+    Table<double> sm;
+    Table<double> ss;
+    Table<double> ud;
+    Table<double> uf;
+    Table<double> um;
+    Table<double> ps;
 
-    bool setInMatrix(Matrix<double> &mat, double value, int i, int j);
-    bool setInVector(std::vector<double> &vec, double value, int i);
-    int technicalCheck(double *solution, int arrSize);
+    int technicalCheck(double const * solution, int arrSize);
     double getKt(Matrix<double> &xd, Matrix<double> &xf, Matrix<double> &xm);
     double getKu(Matrix<double> &xd, Matrix<double> &xf, Matrix<double> &xm);
     double getP(Matrix<double> &xm);
     double getProfit(Matrix<double> &xd, Matrix<double> &xf, Matrix<double> &xm);
-    MscnSolution parseSolution(double *solution);
+    MscnSolution parseSolution(double const * solution);
 };
 
 #endif // MSCNPROBLEM_H

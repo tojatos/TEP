@@ -18,9 +18,8 @@ public:
     {
         resize(width, height);
     }
-    Matrix(std::istream &is)
+    Matrix(std::istream &is, int width, int height)
     {
-        is >> width >> height;
         resize(width, height);
         for(int i = 0; i < height; ++i)
         {
@@ -52,8 +51,6 @@ public:
 
     friend std::ostream& operator<< (std::ostream &os, const Matrix &matrix)
     {
-        os << matrix.width << ' ' << matrix.height;
-        os << '\n';
         for(int i = 0; i < matrix.height; ++i)
         {
             for(int j = 0; j < matrix.width; ++j)

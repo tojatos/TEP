@@ -13,6 +13,8 @@ set(HEADERS
     constants.h
     mscnproblem.h
     matrix.h
+    table.h
+    tablehelper.h
     mysmartpointer.h
     refcounter.h
     streamhelper.h
