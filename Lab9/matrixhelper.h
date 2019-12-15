@@ -2,6 +2,8 @@
 #define MATRIXHELPER_H
 
 #include "matrix.h"
+#include "table.h"
+#include <iostream>
 
 template <typename T>
 bool anyHigherThanZeroInARow(Matrix<T> &mat, int row)
@@ -51,6 +53,14 @@ bool setInMatrix(Matrix<T> &mat, T value, int i, int j)
     if(value < 0) return false;
 
     mat.set(value, i, j);
+    return true;
+}
+
+inline bool setInMatrix(Matrix<Table<double>> &mat, double value, int i, int j, int k)
+{
+    if(value < 0) return false;
+
+    mat.get(i, j)[k] = value;
     return true;
 }
 

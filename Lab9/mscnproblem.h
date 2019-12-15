@@ -29,7 +29,7 @@ public:
     bool setSCount(int newCount);
 
     bool setInCd(double value, int i, int j);
-    bool setInEf(double value, int i, int j);
+    bool setInCf(double value, int i, int j);
     bool setInCm(double value, int i, int j);
 
     bool setInSd(double value, int i);
@@ -41,7 +41,11 @@ public:
     bool setInUm(double value, int i);
     bool setInPs(double value, int i);
 
-    std::vector<std::array<double, 2>> getMinMaxValues();
+    bool setInXdminmax(double value, int i, int j, int k);
+    bool setInXfminmax(double value, int i, int j, int k);
+    bool setInXmminmax(double value, int i, int j, int k);
+
+    Table<Table<double>> getMinMaxValues();
     double getQuality(double const * solution, int arrSize, int &errorCode);
     bool constraintsSatisfied(double const * solution, int arrSize, int &errorCode);
 
@@ -68,6 +72,12 @@ private:
     Table<double> um;
     Table<double> ps;
 
+    Matrix<Table<double>> xdminmax;
+    Matrix<Table<double>> xfminmax;
+    Matrix<Table<double>> xmminmax;
+
+    void specialRead(Matrix<Table<double>> &mat, std::istream &is, int width, int height);
+    void specialResize(Matrix<Table<double>> &mat, int width, int height);
     int technicalCheck(double const * solution, int arrSize);
     double getKt(Matrix<double> &xd, Matrix<double> &xf, Matrix<double> &xm);
     double getKu(Matrix<double> &xd, Matrix<double> &xf, Matrix<double> &xm);

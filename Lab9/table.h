@@ -53,7 +53,6 @@ public:
         {
             os << table.get(i) << ' ';
         }
-        os << '\n';
         return os;
     }
 private:

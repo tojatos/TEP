@@ -22,7 +22,7 @@ void test()
 
     for(int i = 0; i < testFCount; ++i)
         for(int j = 0; j < testMCount; ++j)
-            problem.setInEf(i*testFCount+j, i, j);
+            problem.setInCf(i*testFCount+j, i, j);
 
     for(int i = 0; i < testMCount; ++i)
         for(int j = 0; j < testSCount; ++j)
@@ -36,6 +36,16 @@ void test()
     problem.setInSf(9, 0);
     problem.setInSs(4, 0);
     problem.setInSs(6, 1);
+
+    for(int i = 0; i < testDCount; ++i)
+        for(int j = 0; j < testFCount; ++j)
+          for(int k = 0; k < 2; ++k)
+            problem.setInXdminmax(i*testDCount+j+k, i, j, k);
+
+    for(int i = 0; i < testMCount; ++i)
+        for(int j = 0; j < testSCount; ++j)
+          for(int k = 0; k < 2; ++k)
+            problem.setInXmminmax(i*testMCount+j+k, i, j, k);
 
     problem.save("test.txt");
     std::ifstream file("test.txt");
@@ -53,11 +63,7 @@ void test()
 
     std::cerr << problem.constraintsSatisfied(solution2.get(), 17, err) << '\n';
     std::cerr << problem.getQuality(solution2.get(), 17, err) << '\n';
-    for(auto i : problem.getMinMaxValues())
-    {
-        std::cerr << i[0] << ' ' << i[1] << '\n';
-    }
-//    std::cerr << err << '\n';
+    std::cerr << problem.getMinMaxValues() << '\n';
 
 //    solution2[0] = -1;
 

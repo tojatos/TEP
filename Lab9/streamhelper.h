@@ -1,8 +1,8 @@
 #ifndef STREAMHELPER_H
 #define STREAMHELPER_H
 
-#include<istream>
-#include<vector>
+#include <istream>
+#include <array>
 
 template<class T>
 T stream_get(std::istream& is){

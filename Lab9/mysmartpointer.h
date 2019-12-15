@@ -45,6 +45,8 @@ public:
         pointer = other.pointer;
         counter = other.counter;
         counter->add();
+
+        return *this;
     }
 private:
     T *pointer;

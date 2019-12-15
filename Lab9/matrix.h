@@ -53,11 +53,11 @@ public:
     {
         for(int i = 0; i < matrix.height; ++i)
         {
+            if(i != 0) os << '\n';
             for(int j = 0; j < matrix.width; ++j)
             {
                 os << matrix.get(i, j) << ' ';
             }
-            os << '\n';
         }
         return os;
     }
