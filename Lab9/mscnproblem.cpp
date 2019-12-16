@@ -132,7 +132,7 @@ int MscnProblem::technicalCheck(double const * const solution, int arrSize)
     return 0;
 }
 
-double MscnProblem::getKt(Matrix<double> &xd, Matrix<double> &xf, Matrix<double> &xm)
+double MscnProblem::getKu(Matrix<double> &xd, Matrix<double> &xf, Matrix<double> &xm)
 {
     double result = 0;
 
@@ -154,7 +154,7 @@ double MscnProblem::getKt(Matrix<double> &xd, Matrix<double> &xf, Matrix<double>
     return result;
 }
 
-double MscnProblem::getKu(Matrix<double> &xd, Matrix<double> &xf, Matrix<double> &xm)
+double MscnProblem::getKt(Matrix<double> &xd, Matrix<double> &xf, Matrix<double> &xm)
 {
     double result = 0;
 
@@ -195,19 +195,19 @@ MscnSolution MscnProblem::parseSolution(double const * const solution)
 
     for(int i = 0; i < dCount; ++i)
         for(int j = 0; j < fCount; ++j)
-            xd.set(solution[i*dCount+j], i, j);
+            xd.set(solution[i*fCount+j], i, j);
 
     int xdSize = xd.size();
 
     for(int i = 0; i < fCount; ++i)
         for(int j = 0; j < mCount; ++j)
-            xf.set(solution[xdSize + i*fCount+j], i, j);
+            xf.set(solution[xdSize + i*mCount+j], i, j);
 
     int xfSize = xf.size();
 
     for(int i = 0; i < mCount; ++i)
         for(int j = 0; j < sCount; ++j)
-            xm.set(solution[xdSize + xfSize + i*mCount+j], i, j);
+            xm.set(solution[xdSize + xfSize + i*sCount+j], i, j);
 
     return { xd, xf, xm };
 }
@@ -337,6 +337,25 @@ bool MscnProblem::setInXfminmax(double value, int i, int j, int k)
 bool MscnProblem::setInXmminmax(double value, int i, int j, int k)
 {
     return setInMatrix(xmminmax, value, i, j, k);
+}
+
+double MscnProblem::getKt(double * solution)
+{
+    auto x = parseSolution(solution);
+    return getKt(x.xd, x.xf, x.xm);
+}
+
+double MscnProblem::getKu(double * solution)
+{
+    auto x = parseSolution(solution);
+    return getKu(x.xd, x.xf, x.xm);
+
+}
+
+double MscnProblem::getP(double * solution)
+{
+    auto x = parseSolution(solution);
+    return getP(x.xm);
 }
 
 Table<Table<double>> MscnProblem::getMinMaxValues()

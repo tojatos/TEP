@@ -74,13 +74,41 @@ void test()
 void randTest()
 {
     MscnProblem p;
+    p.setDCount(2);
+    p.setFCount(1);
+    p.setMCount(2);
+    p.setSCount(1);
     p.generateInstance(0);
-    std::cerr << p;
+//    p.save("rand.txt");
+
+//    MySmartPointer<double> solution(new double[6] {5, 6, 4, 5, 3, 2}, true);
+    double solution[6] {5, 6, 4, 5, 3, 2};
+    MySmartPointer<double> solution2(new double[6](), true);
+    MySmartPointer<double> solution3(new double[6] {1, 2, 3, 4, 5, 6}, true);
+//    MySmartPointer<double> solution4(new double[6] {100, 2, 3, 4, 5, 100}, true);
+
+    int err;
+//    std::cerr << p.constraintsSatisfied(solution.get(), 6, err) << '\n';
+    std::cerr << p.getQuality(solution, 6, err) << '\n';
+//    std::cout << p.getP(solution) << '\n';
+//    std::cout << p.getKt(solution) << '\n';
+//    std::cout << p.getKu(solution) << '\n';
+//    std::cerr << p.constraintsSatisfied(solution2.get(), 6, err) << '\n';
+    std::cerr << p.getQuality(solution2.get(), 6, err) << '\n';
+    std::cerr << p.getQuality(solution3.get(), 6, err) << '\n';
+//    std::cerr << p.getQuality(solution4.get(), 6, err) << '\n';
 }
 
 int main()
 {
 //    test();
     randTest();
+//    std::ifstream plik("kon3.txt");
+//    MscnProblem p(plik);
+//    double s[9] = {25, 25, 25, 25 ,0 ,0, 75, 75, 150};
+//    int err;
+//    std::cerr << p;
+//    std::cerr << p.getQuality(s, 9, err) << '\n';
+
     return 0;
 }

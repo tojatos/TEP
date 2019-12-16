@@ -45,6 +45,10 @@ public:
     bool setInXfminmax(double value, int i, int j, int k);
     bool setInXmminmax(double value, int i, int j, int k);
 
+    double getKt(double * solution);
+    double getKu(double * solution);
+    double getP(double * solution);
+
     Table<Table<double>> getMinMaxValues();
     double getQuality(double const * solution, int arrSize, int &errorCode);
     bool constraintsSatisfied(double const * solution, int arrSize, int &errorCode);
