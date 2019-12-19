@@ -99,10 +99,18 @@ void randTest()
 //    std::cerr << p.getQuality(solution4.get(), 6, err) << '\n';
 }
 
+void modtest()
+{
+    std::ifstream testbla("testbla.txt");
+    MscnProblem p(testbla);
+    std::cerr << p;
+}
+
 int main()
 {
+    modtest();
 //    test();
-    randTest();
+//    randTest();
 //    std::ifstream plik("kon3.txt");
 //    MscnProblem p(plik);
 //    double s[9] = {25, 25, 25, 25 ,0 ,0, 75, 75, 150};

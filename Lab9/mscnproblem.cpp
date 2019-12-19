@@ -27,45 +27,45 @@ MscnProblem::MscnProblem()
 
 MscnProblem::MscnProblem(std::istream &is)
 {
-    stream_get<std::string>(is);
+    stream_ignore_char(is, 1);
     dCount = stream_get<int>(is);
-    stream_get<std::string>(is);
+    stream_ignore_char(is, 1);
     fCount = stream_get<int>(is);
-    stream_get<std::string>(is);
+    stream_ignore_char(is, 1);
     mCount = stream_get<int>(is);
-    stream_get<std::string>(is);
+    stream_ignore_char(is, 1);
     sCount = stream_get<int>(is);
 
-    stream_get<std::string>(is);
+    stream_ignore_char(is, 2);
     sd = Table<double>(is, dCount);
-    stream_get<std::string>(is);
+    stream_ignore_char(is, 2);
     sf = Table<double>(is, fCount);
-    stream_get<std::string>(is);
+    stream_ignore_char(is, 2);
     sm = Table<double>(is, mCount);
-    stream_get<std::string>(is);
+    stream_ignore_char(is, 2);
     ss = Table<double>(is, sCount);
 
-    stream_get<std::string>(is);
+    stream_ignore_char(is, 2);
     cd = Matrix<double>(is, fCount, dCount);
-    stream_get<std::string>(is);
+    stream_ignore_char(is, 2);
     cf = Matrix<double>(is, mCount, fCount);
-    stream_get<std::string>(is);
+    stream_ignore_char(is, 2);
     cm = Matrix<double>(is, sCount, mCount);
 
-    stream_get<std::string>(is);
+    stream_ignore_char(is, 2);
     ud = Table<double>(is, dCount);
-    stream_get<std::string>(is);
+    stream_ignore_char(is, 2);
     uf = Table<double>(is, fCount);
-    stream_get<std::string>(is);
+    stream_ignore_char(is, 2);
     um = Table<double>(is, mCount);
-    stream_get<std::string>(is);
+    stream_ignore_char(is, 1);
     ps = Table<double>(is, sCount);
 
-    stream_get<std::string>(is);
+    stream_ignore_char(is, 8);
     specialRead(xdminmax, is, fCount, dCount);
-    stream_get<std::string>(is);
+    stream_ignore_char(is, 8);
     specialRead(xfminmax, is, mCount, fCount);
-    stream_get<std::string>(is);
+    stream_ignore_char(is, 8);
     specialRead(xmminmax, is, sCount, mCount);
 }
 
