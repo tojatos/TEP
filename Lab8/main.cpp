@@ -3,6 +3,7 @@
 #include "constants.h"
 #include "table.h"
 #include "tab.h"
+#include "number.h"
 
 void mod_tab(Table *tab, int newSize)
 {
@@ -78,11 +79,25 @@ void test2()
     other = std::move(tab);
     other.getValue(0);
 }
+Number getVal()
+{
+    Number n2(3);
+    return std::move(n2);
+}
+
+void test3()
+{
+    Number num(5.4);
+    Number n3(std::move(num));
+    n3 = getVal();
+    num = n3;
+}
 
 int main()
 {
 //    msTest();
 //    test();
-    test2();
+//    test2();
+    test3();
     return 0;
 }

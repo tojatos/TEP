@@ -10,12 +10,14 @@ set(SOURCES
     table.cpp
     helper.cpp
     tab.cpp
+    number.cpp
     )
 set(HEADERS
     constants.h
     table.h
     helper.h
     tab.h
+    number.h
     )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
