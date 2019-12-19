@@ -14,4 +14,9 @@
 #define DEF_MSCN_M 5
 #define DEF_MSCN_S 5
 
+#define E_OK 0
+#define E_NULLPTR 1
+#define E_INV_ARR_SIZE 2
+#define E_BAD_ARR_VAL 3
+
 #endif // CONSTANTS_H

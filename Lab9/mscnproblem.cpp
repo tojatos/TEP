@@ -120,16 +120,16 @@ bool MscnProblem::setSCount(int newCount)
 
 int MscnProblem::technicalCheck(double const * const solution, int arrSize)
 {
-    if(solution == NULL) return 1;
+    if(solution == NULL) return E_NULLPTR;
 
     int requiredSize = dCount * fCount + fCount * mCount + mCount * sCount;
-    if(arrSize != requiredSize) return 2;
+    if(arrSize != requiredSize) return E_INV_ARR_SIZE;
 
     for(int i = 0; i < arrSize; ++i)
     {
-        if (solution[i] < 0) return 3;
+        if (solution[i] < 0) return E_BAD_ARR_VAL;
     }
-    return 0;
+    return E_OK;
 }
 
 double MscnProblem::getKu(Matrix<double> &xd, Matrix<double> &xf, Matrix<double> &xm)
