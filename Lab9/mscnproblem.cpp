@@ -341,20 +341,19 @@ bool MscnProblem::setInXmminmax(double value, int i, int j, int k)
 
 double MscnProblem::getKt(double * solution)
 {
-    auto x = parseSolution(solution);
+    MscnSolution x = parseSolution(solution);
     return getKt(x.xd, x.xf, x.xm);
 }
 
 double MscnProblem::getKu(double * solution)
 {
-    auto x = parseSolution(solution);
+    MscnSolution x = parseSolution(solution);
     return getKu(x.xd, x.xf, x.xm);
-
 }
 
 double MscnProblem::getP(double * solution)
 {
-    auto x = parseSolution(solution);
+    MscnSolution x = parseSolution(solution);
     return getP(x.xm);
 }
 
