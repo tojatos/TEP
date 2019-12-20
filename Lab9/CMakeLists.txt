@@ -9,6 +9,7 @@ set(SOURCES
     main.cpp
     mscnproblem.cpp
     random.cpp
+    randomsearch.cpp
     )
 set(HEADERS
     constants.h
@@ -21,6 +22,7 @@ set(HEADERS
     streamhelper.h
     matrixhelper.h
     random.h
+    randomsearch.h
     )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})

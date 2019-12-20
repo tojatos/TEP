@@ -108,9 +108,9 @@ void modtest()
 
 int main()
 {
-    modtest();
+//    modtest();
 //    test();
-//    randTest();
+    randTest();
 //    std::ifstream plik("kon3.txt");
 //    MscnProblem p(plik);
 //    double s[9] = {25, 25, 25, 25 ,0 ,0, 75, 75, 150};

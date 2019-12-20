@@ -45,19 +45,21 @@ public:
     bool setInXfminmax(double value, int i, int j, int k);
     bool setInXmminmax(double value, int i, int j, int k);
 
-    double getKt(double * solution);
-    double getKu(double * solution);
-    double getP(double * solution);
+    double getKt(double * solution) const;
+    double getKu(double * solution) const;
+    double getP(double * solution) const;
 
-    Table<Table<double>> getMinMaxValues();
-    double getQuality(double const * solution, int arrSize, int &errorCode);
-    bool constraintsSatisfied(double const * solution, int arrSize, int &errorCode);
+
+    Table<Table<double>> getMinMaxValues() const;
+    double getQuality(double const * solution, int arrSize, int &errorCode) const;
+    bool constraintsSatisfied(double const * solution, int arrSize, int &errorCode) const;
+    int getSolutionLength() const;
 
     void generateInstance(int intanceSeed);
 
-    std::string serialize();
+    std::string serialize() const;
 
-    void save(std::string const &path);
+    void save(std::string const &path) const;
 
     friend std::ostream& operator<< (std::ostream &os, const MscnProblem &problem);
 private:
@@ -84,12 +86,12 @@ private:
 
     void specialRead(Matrix<Table<double>> &mat, std::istream &is, int width, int height);
     void specialResize(Matrix<Table<double>> &mat, int width, int height);
-    int technicalCheck(double const * solution, int arrSize);
-    double getKt(Matrix<double> &xd, Matrix<double> &xf, Matrix<double> &xm);
-    double getKu(Matrix<double> &xd, Matrix<double> &xf, Matrix<double> &xm);
-    double getP(Matrix<double> &xm);
-    double getProfit(Matrix<double> &xd, Matrix<double> &xf, Matrix<double> &xm);
-    MscnSolution parseSolution(double const * solution);
+    int technicalCheck(double const * solution, int arrSize) const;
+    double getKt(Matrix<double> &xd, Matrix<double> &xf, Matrix<double> &xm) const;
+    double getKu(Matrix<double> &xd, Matrix<double> &xf, Matrix<double> &xm) const;
+    double getP(Matrix<double> &xm) const;
+    double getProfit(Matrix<double> &xd, Matrix<double> &xf, Matrix<double> &xm) const;
+    MscnSolution parseSolution(double const * solution) const;
 };
 
 #endif // MSCNPROBLEM_H

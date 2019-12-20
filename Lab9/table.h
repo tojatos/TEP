@@ -45,6 +45,8 @@ public:
         return table[i];
     }
 
+    T* operator*() { return(table.get()); }
+
     int size() { return width; }
 
     friend std::ostream& operator<< (std::ostream &os, const Table &table)

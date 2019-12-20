@@ -118,12 +118,11 @@ bool MscnProblem::setSCount(int newCount)
     return true;
 }
 
-int MscnProblem::technicalCheck(double const * const solution, int arrSize)
+int MscnProblem::technicalCheck(double const * const solution, int arrSize) const
 {
     if(solution == NULL) return E_NULLPTR;
 
-    int requiredSize = dCount * fCount + fCount * mCount + mCount * sCount;
-    if(arrSize != requiredSize) return E_INV_ARR_SIZE;
+    if(arrSize != getSolutionLength()) return E_INV_ARR_SIZE;
 
     for(int i = 0; i < arrSize; ++i)
     {
@@ -132,7 +131,7 @@ int MscnProblem::technicalCheck(double const * const solution, int arrSize)
     return E_OK;
 }
 
-double MscnProblem::getKu(Matrix<double> &xd, Matrix<double> &xf, Matrix<double> &xm)
+double MscnProblem::getKu(Matrix<double> &xd, Matrix<double> &xf, Matrix<double> &xm) const
 {
     double result = 0;
 
@@ -154,7 +153,7 @@ double MscnProblem::getKu(Matrix<double> &xd, Matrix<double> &xf, Matrix<double>
     return result;
 }
 
-double MscnProblem::getKt(Matrix<double> &xd, Matrix<double> &xf, Matrix<double> &xm)
+double MscnProblem::getKt(Matrix<double> &xd, Matrix<double> &xf, Matrix<double> &xm) const
 {
     double result = 0;
 
@@ -173,7 +172,7 @@ double MscnProblem::getKt(Matrix<double> &xd, Matrix<double> &xf, Matrix<double>
     return result;
 }
 
-double MscnProblem::getP(Matrix<double> &xm)
+double MscnProblem::getP(Matrix<double> &xm) const
 {
     double result = 0;
     for(int i = 0; i < mCount; ++i)
@@ -182,12 +181,12 @@ double MscnProblem::getP(Matrix<double> &xm)
     return result;
 }
 
-double MscnProblem::getProfit(Matrix<double> &xd, Matrix<double> &xf, Matrix<double> &xm)
+double MscnProblem::getProfit(Matrix<double> &xd, Matrix<double> &xf, Matrix<double> &xm) const
 {
     return getP(xm) - getKt(xd, xf, xm) - getKu(xd, xf, xm);
 }
 
-MscnSolution MscnProblem::parseSolution(double const * const solution)
+MscnSolution MscnProblem::parseSolution(double const * const solution) const
 {
     Matrix<double> xd(fCount, dCount);
     Matrix<double> xf(mCount, fCount);
@@ -339,27 +338,27 @@ bool MscnProblem::setInXmminmax(double value, int i, int j, int k)
     return setInMatrix(xmminmax, value, i, j, k);
 }
 
-double MscnProblem::getKt(double * solution)
+double MscnProblem::getKt(double * solution) const
 {
     MscnSolution x = parseSolution(solution);
     return getKt(x.xd, x.xf, x.xm);
 }
 
-double MscnProblem::getKu(double * solution)
+double MscnProblem::getKu(double * solution) const
 {
     MscnSolution x = parseSolution(solution);
     return getKu(x.xd, x.xf, x.xm);
 }
 
-double MscnProblem::getP(double * solution)
+double MscnProblem::getP(double * solution) const
 {
     MscnSolution x = parseSolution(solution);
     return getP(x.xm);
 }
 
-Table<Table<double>> MscnProblem::getMinMaxValues()
+Table<Table<double>> MscnProblem::getMinMaxValues() const
 {
-    int tablen = dCount*fCount+fCount*mCount+mCount*sCount;
+    int tablen = getSolutionLength();
     Table<Table<double>> tab(tablen);
     for(int i = 0; i < tablen; ++i)
         tab[i] = Table<double>(2);
@@ -382,6 +381,11 @@ Table<Table<double>> MscnProblem::getMinMaxValues()
     return tab;
 }
 
+int MscnProblem::getSolutionLength() const
+{
+    return dCount * fCount + fCount * mCount + mCount * sCount;
+}
+
 void MscnProblem::generateInstance(int intanceSeed)
 {
     Random r(intanceSeed);
@@ -398,7 +402,7 @@ void MscnProblem::generateInstance(int intanceSeed)
     randomize(ps, r, DEF_MSCN_RAND_MIN, DEF_MSCN_RAND_MAX);
 }
 
-double MscnProblem::getQuality(double const * const solution, int arrSize, int &errorCode)
+double MscnProblem::getQuality(double const * const solution, int arrSize, int &errorCode) const
 {
     if((errorCode = technicalCheck(solution, arrSize)) != 0) return 0;
 
@@ -407,7 +411,7 @@ double MscnProblem::getQuality(double const * const solution, int arrSize, int &
     return getProfit(s.xd, s.xf, s.xm);
 }
 
-bool MscnProblem::constraintsSatisfied(double const * const solution, int arrSize, int &errorCode)
+bool MscnProblem::constraintsSatisfied(double const * const solution, int arrSize, int &errorCode) const
 {
     if((errorCode = technicalCheck(solution, arrSize)) != 0) return false;
 
@@ -446,7 +450,7 @@ bool MscnProblem::constraintsSatisfied(double const * const solution, int arrSiz
     return true;
 }
 
-void MscnProblem::save(std::string const &path)
+void MscnProblem::save(std::string const &path) const
 {
     std::ofstream file(path);
     file << *this;
