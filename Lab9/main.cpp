@@ -108,8 +108,8 @@ void modtest()
 void randSearchTest()
 {
     MscnProblem p;
-    p.setDCount(1);
-    p.setFCount(1);
+    p.setDCount(2);
+    p.setFCount(2);
     p.setMCount(2);
     p.setSCount(3);
     p.generateInstance(0);
