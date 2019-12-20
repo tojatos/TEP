@@ -4,6 +4,7 @@
 #include "mscnproblem.h"
 #include "mysmartpointer.h"
 #include "random.h"
+#include "randomsearch.h"
 
 void test()
 {
@@ -98,25 +99,34 @@ void randTest()
     std::cerr << p.getQuality(solution3.get(), 6, err) << '\n';
 //    std::cerr << p.getQuality(solution4.get(), 6, err) << '\n';
 }
-
 void modtest()
 {
     std::ifstream testbla("testbla.txt");
     MscnProblem p(testbla);
     std::cerr << p;
 }
-
+void randSearchTest()
+{
+    MscnProblem p;
+    p.setDCount(1);
+    p.setFCount(1);
+    p.setMCount(2);
+    p.setSCount(3);
+    p.generateInstance(0);
+    p.setDefaultMinMaxValues();
+    std::cout << p << '\n';
+    RandomSearch rs(&p);
+    Table<double> result = rs.getBestFound();
+    std::cerr << result << '\n';
+    int err;
+    std::cerr << p.getQuality(*result, result.size(), err) << '\n';
+}
 int main()
 {
 //    modtest();
 //    test();
-    randTest();
-//    std::ifstream plik("kon3.txt");
-//    MscnProblem p(plik);
-//    double s[9] = {25, 25, 25, 25 ,0 ,0, 75, 75, 150};
-//    int err;
-//    std::cerr << p;
-//    std::cerr << p.getQuality(s, 9, err) << '\n';
+//    randTest();
+    randSearchTest();
 
     return 0;
 }

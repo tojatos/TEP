@@ -137,17 +137,17 @@ double MscnProblem::getKu(Matrix<double> &xd, Matrix<double> &xf, Matrix<double>
 
     for(int i = 0; i < dCount; ++i)
     {
-      if(anyHigherThanZeroInARow(xd, i)) result += ud[i];
+        if(anyHigherThanZeroInARow(xd, i)) result += ud[i];
     }
 
     for(int i = 0; i < fCount; ++i)
     {
-      if(anyHigherThanZeroInARow(xf, i)) result += uf[i];
+        if(anyHigherThanZeroInARow(xf, i)) result += uf[i];
     }
 
     for(int i = 0; i < mCount; ++i)
     {
-      if(anyHigherThanZeroInARow(xm, i)) result += um[i];
+        if(anyHigherThanZeroInARow(xm, i)) result += um[i];
     }
 
     return result;
@@ -158,16 +158,16 @@ double MscnProblem::getKt(Matrix<double> &xd, Matrix<double> &xf, Matrix<double>
     double result = 0;
 
     for(int i = 0; i < dCount; ++i)
-      for(int j = 0; j < fCount; ++j)
-          result += cd.get(i, j) * xd.get(i, j);
+        for(int j = 0; j < fCount; ++j)
+            result += cd.get(i, j) * xd.get(i, j);
 
     for(int i = 0; i < fCount; ++i)
-      for(int j = 0; j < mCount; ++j)
-          result += cf.get(i, j) * xf.get(i, j);
+        for(int j = 0; j < mCount; ++j)
+            result += cf.get(i, j) * xf.get(i, j);
 
     for(int i = 0; i < mCount; ++i)
-      for(int j = 0; j < sCount; ++j)
-          result += cm.get(i, j) * xm.get(i, j);
+        for(int j = 0; j < sCount; ++j)
+            result += cm.get(i, j) * xm.get(i, j);
 
     return result;
 }
@@ -176,8 +176,8 @@ double MscnProblem::getP(Matrix<double> &xm) const
 {
     double result = 0;
     for(int i = 0; i < mCount; ++i)
-      for(int j = 0; j < sCount; ++j)
-          result += ps[j] * xm.get(i, j);
+        for(int j = 0; j < sCount; ++j)
+            result += ps[j] * xm.get(i, j);
     return result;
 }
 
@@ -365,18 +365,18 @@ Table<Table<double>> MscnProblem::getMinMaxValues() const
 
     for(int i = 0; i < dCount; ++i)
         for(int j = 0; j < fCount; ++j)
-          for(int k = 0; k < 2; ++k)
-            tab[i*fCount + j][k] = xdminmax.get(i, j)[k];
+            for(int k = 0; k < 2; ++k)
+                tab[i*fCount + j][k] = xdminmax.get(i, j)[k];
 
     for(int i = 0; i < fCount; ++i)
         for(int j = 0; j < mCount; ++j)
-          for(int k = 0; k < 2; ++k)
-            tab[dCount*fCount + i*dCount + j][k] = xfminmax.get(i, j)[k];
+            for(int k = 0; k < 2; ++k)
+                tab[dCount*fCount + i*dCount + j][k] = xfminmax.get(i, j)[k];
 
     for(int i = 0; i < mCount; ++i)
         for(int j = 0; j < sCount; ++j)
-          for(int k = 0; k < 2; ++k)
-            tab[dCount*fCount + fCount * mCount + i*sCount + j][k] = xmminmax.get(i, j)[k];
+            for(int k = 0; k < 2; ++k)
+                tab[dCount*fCount + fCount * mCount + i*sCount + j][k] = xmminmax.get(i, j)[k];
 
     return tab;
 }
@@ -389,17 +389,41 @@ int MscnProblem::getSolutionLength() const
 void MscnProblem::generateInstance(int intanceSeed)
 {
     Random r(intanceSeed);
-    randomize(cd, r, DEF_MSCN_RAND_MIN, DEF_MSCN_RAND_MAX);
-    randomize(cf, r, DEF_MSCN_RAND_MIN, DEF_MSCN_RAND_MAX);
-    randomize(cm, r, DEF_MSCN_RAND_MIN, DEF_MSCN_RAND_MAX);
-    randomize(sd, r, DEF_MSCN_RAND_MIN, DEF_MSCN_RAND_MAX);
-    randomize(sf, r, DEF_MSCN_RAND_MIN, DEF_MSCN_RAND_MAX);
-    randomize(sm, r, DEF_MSCN_RAND_MIN, DEF_MSCN_RAND_MAX);
-    randomize(ss, r, DEF_MSCN_RAND_MIN, DEF_MSCN_RAND_MAX);
-    randomize(ud, r, DEF_MSCN_RAND_MIN, DEF_MSCN_RAND_MAX);
-    randomize(uf, r, DEF_MSCN_RAND_MIN, DEF_MSCN_RAND_MAX);
-    randomize(um, r, DEF_MSCN_RAND_MIN, DEF_MSCN_RAND_MAX);
-    randomize(ps, r, DEF_MSCN_RAND_MIN, DEF_MSCN_RAND_MAX);
+    randomize(cd, r, DEF_MSCN_RAND_C_MIN, DEF_MSCN_RAND_C_MAX);
+    randomize(cf, r, DEF_MSCN_RAND_C_MIN, DEF_MSCN_RAND_C_MAX);
+    randomize(cm, r, DEF_MSCN_RAND_C_MIN, DEF_MSCN_RAND_C_MAX);
+    randomize(sd, r, DEF_MSCN_RAND_S_MIN, DEF_MSCN_RAND_S_MAX);
+    randomize(sf, r, DEF_MSCN_RAND_S_MIN, DEF_MSCN_RAND_S_MAX);
+    randomize(sm, r, DEF_MSCN_RAND_S_MIN, DEF_MSCN_RAND_S_MAX);
+    randomize(ss, r, DEF_MSCN_RAND_S_MIN, DEF_MSCN_RAND_S_MAX);
+    randomize(ud, r, DEF_MSCN_RAND_U_MIN, DEF_MSCN_RAND_U_MAX);
+    randomize(uf, r, DEF_MSCN_RAND_U_MIN, DEF_MSCN_RAND_U_MAX);
+    randomize(um, r, DEF_MSCN_RAND_U_MIN, DEF_MSCN_RAND_U_MAX);
+    randomize(ps, r, DEF_MSCN_RAND_P_MIN, DEF_MSCN_RAND_P_MAX);
+}
+
+void MscnProblem::setDefaultMinMaxValues()
+{
+    for(int i = 0; i < dCount; ++i)
+        for(int j = 0; j < fCount; ++j)
+        {
+            xdminmax.get(i, j)[0] = 0;
+            xdminmax.get(i, j)[1] = sd[i];
+        }
+
+    for(int i = 0; i < fCount; ++i)
+        for(int j = 0; j < mCount; ++j)
+        {
+            xfminmax.get(i, j)[0] = 0;
+            xfminmax.get(i, j)[1] = sf[i];
+        }
+
+    for(int i = 0; i < mCount; ++i)
+        for(int j = 0; j < sCount; ++j)
+        {
+            xmminmax.get(i, j)[0] = 0;
+            xmminmax.get(i, j)[1] = sm[i];
+        }
 }
 
 double MscnProblem::getQuality(double const * const solution, int arrSize, int &errorCode) const

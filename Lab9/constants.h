@@ -6,13 +6,21 @@
 
 #define DEF_TAB_WIDTH 4
 
-#define DEF_MSCN_RAND_MIN 0
-#define DEF_MSCN_RAND_MAX 100
+#define DEF_MSCN_RAND_C_MIN 2
+#define DEF_MSCN_RAND_C_MAX 20
+#define DEF_MSCN_RAND_S_MIN 1
+#define DEF_MSCN_RAND_S_MAX 1000
+#define DEF_MSCN_RAND_U_MIN 1
+#define DEF_MSCN_RAND_U_MAX 3
+#define DEF_MSCN_RAND_P_MIN 60
+#define DEF_MSCN_RAND_P_MAX 500
 
 #define DEF_MSCN_D 5
 #define DEF_MSCN_F 5
 #define DEF_MSCN_M 5
 #define DEF_MSCN_S 5
+
+#define DEF_RANDOM_SEARCH_MAX_ITER 1000000
 
 #define E_OK 0
 #define E_NULLPTR 1

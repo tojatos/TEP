@@ -11,45 +11,40 @@ RandomSearch::RandomSearch(MscnProblem *problem)
 
 void RandomSearch::setProblem(MscnProblem *problem)
 {
-    this->problem = MySmartPointer<MscnProblem>(problem);
+    this->problem = problem;
 }
 
 Table<double> RandomSearch::getBestFound() const
 {
-    MscnProblem p = *problem.get();
+    return getBestFound(DEF_RANDOM_SEARCH_MAX_ITER);
+}
+
+Table<double> RandomSearch::getBestFound(int maxIteration) const
+{
+    MscnProblem p = *problem;
     int solutionSize = p.getSolutionLength();
     Table<double> solution(solutionSize);
     Table<double> bestSolution(solutionSize);
-    int bestQuality;
-    bool firstQualitySet = false;
+    double bestQuality = 0;
     Table<Table<double>> minMaxValues = p.getMinMaxValues();
     Random r;
 
-    for(int i = 0; i < solutionSize; ++i)
-       solution[i] = r.next(minMaxValues[i][0], minMaxValues[i][1]);
-
-    int err;
-    bool s = p.constraintsSatisfied(*solution, solutionSize, err);
-    if(err==E_OK && s)
+    while(maxIteration--)
     {
-        int quality = p.getQuality(*solution, solutionSize, err);
-        if(err==E_OK)
+        for(int i = 0; i < solutionSize; ++i)
+            solution[i] = r.next(minMaxValues[i][0], minMaxValues[i][1]);
+
+        int err;
+        bool s = p.constraintsSatisfied(*solution, solutionSize, err);
+        if(err==E_OK && s)
         {
-            if(!firstQualitySet)
+            double quality = p.getQuality(*solution, solutionSize, err);
+            if(err==E_OK && quality > bestQuality)
             {
-                bestQuality = quality;
-                bestSolution = solution;
-                firstQualitySet = true;
-            }
-            else if (quality > bestQuality) {
                 bestQuality = quality;
                 bestSolution = solution;
             }
         }
-
     }
-
-
-
-
+    return bestSolution;
 }

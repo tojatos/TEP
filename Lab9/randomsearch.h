@@ -10,8 +10,9 @@ public:
     RandomSearch(MscnProblem *problem);
     void setProblem(MscnProblem *problem);
     Table<double> getBestFound() const;
+    Table<double> getBestFound(int maxIteration) const;
 private:
-    MySmartPointer<MscnProblem> problem = NULL;
+    MscnProblem* problem = NULL;
 };
 
 #endif // RANDOMSEARCH_H

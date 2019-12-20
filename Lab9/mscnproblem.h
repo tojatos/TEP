@@ -56,6 +56,7 @@ public:
     int getSolutionLength() const;
 
     void generateInstance(int intanceSeed);
+    void setDefaultMinMaxValues();
 
     std::string serialize() const;
 
