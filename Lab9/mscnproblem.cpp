@@ -407,22 +407,28 @@ void MscnProblem::setDefaultMinMaxValues()
     for(int i = 0; i < dCount; ++i)
         for(int j = 0; j < fCount; ++j)
         {
-            xdminmax.get(i, j)[0] = 0;
-            xdminmax.get(i, j)[1] = sd[i];
+            Table<double> tab(2);
+            tab[0] = 0;
+            tab[1] = sd[i];
+            xdminmax.set(tab, i, j);
         }
 
     for(int i = 0; i < fCount; ++i)
         for(int j = 0; j < mCount; ++j)
         {
-            xfminmax.get(i, j)[0] = 0;
-            xfminmax.get(i, j)[1] = sf[i];
+            Table<double> tab(2);
+            tab[0] = 0;
+            tab[1] = sf[i];
+            xfminmax.set(tab, i, j);
         }
 
     for(int i = 0; i < mCount; ++i)
         for(int j = 0; j < sCount; ++j)
         {
-            xmminmax.get(i, j)[0] = 0;
-            xmminmax.get(i, j)[1] = sm[i];
+            Table<double> tab(2);
+            tab[0] = 0;
+            tab[1] = sm[i];
+            xmminmax.set(tab, i, j);
         }
 }
 
@@ -488,8 +494,10 @@ void MscnProblem::specialRead(Matrix<Table<double>> &mat, std::istream &is, int 
     for(int i = 0; i < height; ++i)
         for(int j = 0; j < width; ++j)
         {
-            mat.get(i, j)[0] = stream_get<double>(is);
-            mat.get(i, j)[1] = stream_get<double>(is);
+            Table<double> tab(2);
+            tab[0] = stream_get<double>(is);
+            tab[1] = stream_get<double>(is);
+            mat.set(tab, i, j);
         }
 }
 

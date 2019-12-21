@@ -114,12 +114,28 @@ void randSearchTest()
     p.setSCount(3);
     p.generateInstance(0);
     p.setDefaultMinMaxValues();
-    std::cout << p << '\n';
+//    std::cout << p << '\n';
     RandomSearch rs(&p);
     Table<double> result = rs.getBestFound();
-    std::cerr << result << '\n';
     int err;
-    std::cerr << p.getQuality(*result, result.size(), err) << '\n';
+    std::cerr << "Final fitness: " << p.getQuality(*result, result.size(), err) << '\n';
+    std::cerr << "Final solution: " << result << '\n';
+}
+void tableTest()
+{
+    auto x = Table<int>(4);
+    x[0] = 1;
+    x[1] = 3;
+    x[2] = 3;
+    x[3] = 8;
+    std::cerr << x;
+    Table<int> k = x;
+    std::cerr << k;
+    k = Table<int>(4);
+    std::cerr << k;
+    std::cerr << x;
+    k[1] = 2;
+    std::cerr << k;
 }
 int main()
 {
@@ -127,6 +143,7 @@ int main()
 //    test();
 //    randTest();
     randSearchTest();
+//    tableTest();
 
     return 0;
 }

@@ -18,6 +18,13 @@ public:
     {
         resize(width, height);
     }
+    Matrix(const Matrix<T> &other)
+    {
+        resize(other.width, other.height);
+        for(int i = 0; i < height; ++i)
+          for(int j = 0; j < width; ++j)
+              set(other.get(i, j), i, j);
+    }
     Matrix(std::istream &is, int width, int height)
     {
         resize(width, height);
@@ -29,11 +36,19 @@ public:
             }
         }
     }
+
+    Matrix<T>& operator=(const Matrix<T> &other)
+    {
+        resize(other.width, other.height);
+        for(int i = 0; i < height; ++i)
+          for(int j = 0; j < width; ++j)
+              set(other.get(i, j), i, j);
+        return *this;
+    }
     void resize(int width, int height)
     {
         this->width = width;
         this->height = height;
-        this->msize = width * height;
         matrix = MySmartPointer<T>(new T[width*height](), true);
     }
     void set(T val, int i, int j)
@@ -47,7 +62,7 @@ public:
 
     int getWidth() { return width; }
     int getHeight() { return height; }
-    int size() { return msize; }
+    int size() { return width * height; }
 
     friend std::ostream& operator<< (std::ostream &os, const Matrix &matrix)
     {
@@ -65,7 +80,6 @@ private:
     MySmartPointer<T> matrix = NULL;
     int width;
     int height;
-    int msize;
 };
 
 #endif // MATRIX_H

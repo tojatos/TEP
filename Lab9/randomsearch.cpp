@@ -41,9 +41,15 @@ Table<double> RandomSearch::getBestFound(int maxIteration) const
             double quality = p.getQuality(*solution, solutionSize, err);
             if(err==E_OK && quality > bestQuality)
             {
+//                std::cout << "F: " << bestQuality << '\n';
+//                std::cout << "S: " << bestSolution << '\n';
+//                std::cout << "s: " << solution << '\n';
                 bestQuality = quality;
                 bestSolution = solution;
+//                std::cout << "Fitness: " << bestQuality << '\n';
+//                std::cout << "Solution: " << bestSolution << '\n';
             }
+//            else std::cerr << "Bad fitness: " << quality << '\n';
         }
     }
     return bestSolution;

@@ -1,6 +1,7 @@
 #ifndef MYSMARTPOINTER_H
 #define MYSMARTPOINTER_H
 #include "refcounter.h"
+#include <iostream>
 
 template<typename T>
 class MySmartPointer
@@ -13,7 +14,7 @@ public:
         counter = new RefCounter();
         counter->add();
     }
-    MySmartPointer(const MySmartPointer &other)
+    MySmartPointer(const MySmartPointer<T> &other)
     {
         is_array = other.is_array;
         pointer = other.pointer;
@@ -38,7 +39,7 @@ public:
         if (!is_array) throw;
         return *(pointer+offset);
     }
-    MySmartPointer& operator=(const MySmartPointer &other)
+    MySmartPointer<T>& operator=(const MySmartPointer<T> &other)
     {
         if(counter->dec() == 0) destroy();
         is_array = other.is_array;

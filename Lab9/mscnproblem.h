@@ -58,8 +58,6 @@ public:
     void generateInstance(int intanceSeed);
     void setDefaultMinMaxValues();
 
-    std::string serialize() const;
-
     void save(std::string const &path) const;
 
     friend std::ostream& operator<< (std::ostream &os, const MscnProblem &problem);

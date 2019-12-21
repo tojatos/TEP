@@ -61,7 +61,9 @@ inline bool setInMatrix(Matrix<Table<double>> &mat, double value, int i, int j, 
 {
     if(value < 0) return false;
 
-    mat.get(i, j)[k] = value;
+    Table<double> res = mat.get(i, j);
+    res[k] = value;
+    mat.set(res, i, j);
     return true;
 }
 

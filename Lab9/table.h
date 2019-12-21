@@ -18,6 +18,18 @@ public:
     {
         resize(width);
     }
+    Table(const Table &other)
+    {
+        resize(other.width);
+        for(int i = 0; i < width; ++i)
+            table[i] = other.table[i];
+    }
+    Table(Table &&other)
+    {
+        this->width = other.width;
+        this->table = other.table;
+        other.table = NULL;
+    }
     Table(std::istream &is, int width)
     {
         resize(width);
@@ -25,6 +37,21 @@ public:
         {
             set(stream_get<T>(is), i);
         }
+    }
+    Table<T>& operator=(const Table<T> &other)
+    {
+        resize(other.width);
+        for(int i = 0; i < width; ++i)
+            table[i] = other.table[i];
+        return *this;
+    }
+
+    Table<T>& operator=(Table<T> &&other)
+    {
+        this->width = other.width;
+        this->table = other.table;
+        other.table = NULL;
+        return *this;
     }
     void resize(int width)
     {
