@@ -9,6 +9,8 @@ public:
     RandomSearch();
     RandomSearch(MscnProblem *problem);
     void setProblem(MscnProblem *problem);
+    Table<double> getNext() const;
+    Table<double> getNextValid() const;
     Table<double> getBestFound() const;
     Table<double> getBestFound(int maxIteration) const;
 private:

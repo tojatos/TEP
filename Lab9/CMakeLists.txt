@@ -11,6 +11,7 @@ set(SOURCES
     random.cpp
     randomsearch.cpp
     diffevol.cpp
+    diffindividual.cpp
     )
 set(HEADERS
     constants.h
@@ -25,6 +26,7 @@ set(HEADERS
     random.h
     randomsearch.h
     diffevol.h
+    diffindividual.h
     )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})

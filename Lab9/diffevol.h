@@ -1,6 +1,8 @@
 #ifndef DIFFEVOL_H
 #define DIFFEVOL_H
 #include "mscnproblem.h"
+#include "randomsearch.h"
+#include "diffindividual.h"
 
 class DiffEvol
 {
@@ -11,7 +13,7 @@ public:
     Table<double> getBestFound() const;
     Table<double> getBestFound(int maxIteration) const;
 private:
-    void initPopulation();
+    Table<DiffIndividual> initPopulation() const;
     MscnProblem* problem = NULL;
 };
 

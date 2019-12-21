@@ -14,6 +14,32 @@ void RandomSearch::setProblem(MscnProblem *problem)
     this->problem = problem;
 }
 
+Table<double> RandomSearch::getNext() const
+{
+    MscnProblem p = *problem;
+    int solutionSize = p.getSolutionLength();
+    Table<double> solution(solutionSize);
+    Random r;
+    Table<Table<double>> minMaxValues = p.getMinMaxValues();
+    for(int i = 0; i < solutionSize; ++i)
+        solution[i] = r.next(minMaxValues[i][0], minMaxValues[i][1]);
+    return solution;
+}
+
+Table<double> RandomSearch::getNextValid() const
+{
+    MscnProblem p = *problem;
+    int solutionSize = p.getSolutionLength();
+    Table<double> candidate;
+    int err;
+    bool s;
+    do {
+      s = p.constraintsSatisfied(*(candidate = getNext()), solutionSize, err);
+//      std::cout << candidate << '\n';
+    } while (!s);
+    return candidate;
+}
+
 Table<double> RandomSearch::getBestFound() const
 {
     return getBestFound(DEF_RANDOM_SEARCH_MAX_ITER);
@@ -23,34 +49,22 @@ Table<double> RandomSearch::getBestFound(int maxIteration) const
 {
     MscnProblem p = *problem;
     int solutionSize = p.getSolutionLength();
-    Table<double> solution(solutionSize);
     Table<double> bestSolution(solutionSize);
     double bestQuality = 0;
-    Table<Table<double>> minMaxValues = p.getMinMaxValues();
-    Random r;
+    int err;
 
     while(maxIteration--)
     {
-        for(int i = 0; i < solutionSize; ++i)
-            solution[i] = r.next(minMaxValues[i][0], minMaxValues[i][1]);
-
-        int err;
-        bool s = p.constraintsSatisfied(*solution, solutionSize, err);
-        if(err==E_OK && s)
+        Table<double> candidate = getNextValid();
+        double quality = p.getQuality(*candidate, solutionSize, err);
+        if(err==E_OK && quality > bestQuality)
         {
-            double quality = p.getQuality(*solution, solutionSize, err);
-            if(err==E_OK && quality > bestQuality)
-            {
-//                std::cout << "F: " << bestQuality << '\n';
-//                std::cout << "S: " << bestSolution << '\n';
-//                std::cout << "s: " << solution << '\n';
-                bestQuality = quality;
-                bestSolution = solution;
-//                std::cout << "Fitness: " << bestQuality << '\n';
-//                std::cout << "Solution: " << bestSolution << '\n';
-            }
-//            else std::cerr << "Bad fitness: " << quality << '\n';
+            bestQuality = quality;
+            bestSolution = candidate;
+//            std::cout << "Fitness: " << bestQuality << '\n';
+//            std::cout << "Solution: " << bestSolution << '\n';
         }
+//            else std::cerr << "Bad fitness: " << quality << '\n';
     }
     return bestSolution;
 }
