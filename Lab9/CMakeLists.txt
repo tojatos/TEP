@@ -10,6 +10,7 @@ set(SOURCES
     mscnproblem.cpp
     random.cpp
     randomsearch.cpp
+    diffevol.cpp
     )
 set(HEADERS
     constants.h
@@ -23,6 +24,7 @@ set(HEADERS
     matrixhelper.h
     random.h
     randomsearch.h
+    diffevol.h
     )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
