@@ -7,7 +7,7 @@ class Random
 public:
     Random();
     Random(int seed);
-    int next(int a, int b);
+    int next(int a, int b); // inclusive
     unsigned long next(unsigned long a, unsigned long b);
     double next(double a, double b);
 private:

@@ -5,6 +5,7 @@
 #include "mysmartpointer.h"
 #include "random.h"
 #include "randomsearch.h"
+#include "diffevol.h"
 
 void test()
 {
@@ -137,13 +138,39 @@ void tableTest()
     k[1] = 2;
     std::cerr << k;
 }
+void randValTest()
+{
+    Random r;
+    for(int i = 0; i < 100; ++i)
+      std::cout << r.next(0, 5) << ' ';
+}
+
+void diffEvolTest()
+{
+    MscnProblem p;
+    p.setDCount(2);
+    p.setFCount(2);
+    p.setMCount(2);
+    p.setSCount(3);
+    p.generateInstance(0);
+    p.setDefaultMinMaxValues();
+    std::cout << p << '\n';
+    DiffEvol de(&p);
+    DiffIndividual di = de.getBestFound();
+    std::cerr << "Final fitness: " << di.getFitness() << '\n';
+    std::cerr << "Final solution: " << di.getGenotype() << '\n';
+}
 int main()
 {
 //    modtest();
 //    test();
 //    randTest();
-    randSearchTest();
+//    randSearchTest();
 //    tableTest();
+//    randValTest();
+    std::cout.precision(12);
+    std::cerr.precision(12);
+    diffEvolTest();
 
     return 0;
 }

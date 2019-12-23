@@ -27,6 +27,7 @@ set(HEADERS
     randomsearch.h
     diffevol.h
     diffindividual.h
+    diffhelper.h
     )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
