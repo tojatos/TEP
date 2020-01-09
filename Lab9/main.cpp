@@ -5,6 +5,7 @@
 #include "mysmartpointer.h"
 #include "random.h"
 #include "randomsearch.h"
+#include "modrandomsearch.h"
 #include "diffevol.h"
 
 void test()
@@ -122,6 +123,24 @@ void randSearchTest()
     std::cerr << "Final fitness: " << p.getQuality(*result, result.size(), err) << '\n';
     std::cerr << "Final solution: " << result << '\n';
 }
+
+void modRandSearchTest()
+{
+    MscnProblem p;
+    p.setDCount(2);
+    p.setFCount(2);
+    p.setMCount(2);
+    p.setSCount(3);
+    p.generateInstance(0);
+    p.setDefaultMinMaxValues();
+//    std::cout << p << '\n';
+    ModRandomSearch rs(&p);
+    Table<double> result = rs.getBestFound();
+    int err;
+    std::cerr << "Final fitness: " << p.getQuality(*result, result.size(), err) << '\n';
+    std::cerr << "Final solution: " << result << '\n';
+}
+
 void tableTest()
 {
     auto x = Table<int>(4);
@@ -165,12 +184,13 @@ int main()
 //    modtest();
 //    test();
 //    randTest();
-//    randSearchTest();
 //    tableTest();
 //    randValTest();
     std::cout.precision(12);
     std::cerr.precision(12);
-    diffEvolTest();
+//    randSearchTest();
+    modRandSearchTest();
+//    diffEvolTest();
 
     return 0;
 }

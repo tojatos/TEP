@@ -10,6 +10,7 @@ set(SOURCES
     mscnproblem.cpp
     random.cpp
     randomsearch.cpp
+    modrandomsearch.cpp
     diffevol.cpp
     diffindividual.cpp
     )
@@ -25,6 +26,7 @@ set(HEADERS
     matrixhelper.h
     random.h
     randomsearch.h
+    modrandomsearch.h
     diffevol.h
     diffindividual.h
     diffhelper.h
