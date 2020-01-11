@@ -40,13 +40,14 @@ DiffIndividual DiffEvol::getBestFound(const int maxIteration, const int populati
   Random r;
   int solLen = problem->getSolutionLength();
   Table<Table<double>> minmax = problem->getMinMaxValues();
-  int addIndex0, addIndex1;
+  int baseIndex, addIndex0, addIndex1;
   int iterations = 0;
   while(iterations <= maxIteration)
   {
-    for(int baseIndex = 0; baseIndex < populationNumber && iterations <= maxIteration; ++baseIndex)
+    for(int i = 0; i < populationNumber && iterations <= maxIteration; ++i)
     {
       do {
+        baseIndex = r.next(0, populationNumber-1);
         addIndex0 = r.next(0, populationNumber-1);
         addIndex1 = r.next(0, populationNumber-1);
       } while(!areDifferent(baseIndex, addIndex0, addIndex1));
@@ -63,9 +64,11 @@ DiffIndividual DiffEvol::getBestFound(const int maxIteration, const int populati
         double newQuality = problem->getQuality(*solNew, solLen, err);
         if(err==E_OK)
         {
-          if(!pop[baseIndex].getAreContraintsSatisfied() || newQuality > pop[baseIndex].getFitness())
-            pop[baseIndex] = DiffIndividual(newQuality, solNew, true);
-          std::cerr << "Fitness: " << newQuality << '\n';
+          if(!pop[i].getAreContraintsSatisfied() || newQuality > pop[i].getFitness())
+          {
+            pop[i] = DiffIndividual(newQuality, solNew, true);
+            std::cerr << "Fitness: " << newQuality << '\n';
+          }
         }
       }
       iterations++;
