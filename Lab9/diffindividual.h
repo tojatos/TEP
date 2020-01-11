@@ -7,7 +7,7 @@ class DiffIndividual
 {
 public:
     DiffIndividual();
-    DiffIndividual(double fitness, Table<double> &genotype);
+    DiffIndividual(double fitness, Table<double> &genotype, bool areConstraintsSatisfied);
     double getFitness() const;
     void setFitness(double value);
 
@@ -15,9 +15,13 @@ public:
     void setGenotype(const Table<double> &value);
     void setGenotypeAt(const double value, const int offset) const;
 
+    bool getAreContraintsSatisfied() const;
+    void setAreContraintsSatisfied(bool value);
+
 private:
     Table<double> genotype;
     double fitness;
+    bool areConstraintsSatisfied;
 };
 
 #endif // DIFFINDIVIDUAL_H

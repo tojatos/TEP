@@ -189,8 +189,8 @@ int main()
     std::cout.precision(12);
     std::cerr.precision(12);
 //    randSearchTest();
-    modRandSearchTest();
-//    diffEvolTest();
+//    modRandSearchTest();
+    diffEvolTest();
 
     return 0;
 }

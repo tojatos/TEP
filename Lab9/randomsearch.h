@@ -1,6 +1,7 @@
 #ifndef RANDOMSEARCH_H
 #define RANDOMSEARCH_H
 #include "mscnproblem.h"
+#include "diffindividual.h"
 #include "random.h"
 
 class RandomSearch
@@ -13,6 +14,7 @@ public:
     Table<double> getNextValid() const;
     Table<double> getBestFound() const;
     Table<double> getBestFound(int maxIteration) const;
+    DiffIndividual getNextInd() const;
 private:
     MscnProblem* problem = NULL;
 };

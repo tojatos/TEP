@@ -51,6 +51,7 @@ public:
 
 
     Table<Table<double>> getMinMaxValues() const;
+    int technicalCheck(double const * solution, int arrSize) const;
     double getQuality(double const * solution, int arrSize, int &errorCode) const;
     bool constraintsSatisfied(double const * solution, int arrSize, int &errorCode) const;
     int getSolutionLength() const;
@@ -85,7 +86,6 @@ private:
 
     void specialRead(Matrix<Table<double>> &mat, std::istream &is, int width, int height);
     void specialResize(Matrix<Table<double>> &mat, int width, int height);
-    int technicalCheck(double const * solution, int arrSize) const;
     double getKt(Matrix<double> &xd, Matrix<double> &xf, Matrix<double> &xm) const;
     double getKu(Matrix<double> &xd, Matrix<double> &xf, Matrix<double> &xm) const;
     double getP(Matrix<double> &xm) const;

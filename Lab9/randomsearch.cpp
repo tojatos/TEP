@@ -68,3 +68,16 @@ Table<double> RandomSearch::getBestFound(int maxIteration) const
     }
     return bestSolution;
 }
+
+DiffIndividual RandomSearch::getNextInd() const
+{
+    int err;
+    Table<double> sol;
+    do {
+      sol = getNext();
+      err = problem->technicalCheck(*sol, sol.size());
+    } while(err != E_OK);
+    double val = problem->getQuality(*sol, sol.size(), err);
+    bool cs = problem->constraintsSatisfied(*sol, sol.size(), err);
+    return DiffIndividual(val, sol, cs);
+}

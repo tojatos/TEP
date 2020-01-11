@@ -5,10 +5,11 @@ DiffIndividual::DiffIndividual()
 
 }
 
-DiffIndividual::DiffIndividual(double fitness, Table<double> &genotype)
+DiffIndividual::DiffIndividual(double fitness, Table<double> &genotype, bool areConstraintsSatisfied)
 {
     this->fitness = fitness;
     this->genotype = genotype;
+    this->areConstraintsSatisfied = areConstraintsSatisfied;
 }
 
 double DiffIndividual::getFitness() const { return fitness; }
@@ -19,3 +20,6 @@ void DiffIndividual::setGenotypeAt(const double value, const int offset) const
 {
     this->genotype[offset] = value;
 }
+
+bool DiffIndividual::getAreContraintsSatisfied() const { return areConstraintsSatisfied; }
+void DiffIndividual::setAreContraintsSatisfied(bool value) { areConstraintsSatisfied = value; }
