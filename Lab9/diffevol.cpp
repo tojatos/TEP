@@ -47,9 +47,12 @@ DiffIndividual DiffEvol::getBestFound(const int maxIteration, const int populati
     for(int i = 0; i < populationNumber && iterations <= maxIteration; ++i)
     {
       do {
-        baseIndex = r.next(0, populationNumber-1);
-        addIndex0 = r.next(0, populationNumber-1);
-        addIndex1 = r.next(0, populationNumber-1);
+//        baseIndex = r.next(0, populationNumber-1);
+//        addIndex0 = r.next(0, populationNumber-1);
+//        addIndex1 = r.next(0, populationNumber-1);
+        baseIndex = getIndexFromTournament(DEF_DIFF_TOURNAMENT_SIZE, pop, r);
+        addIndex0 = getIndexFromTournament(DEF_DIFF_TOURNAMENT_SIZE, pop, r);
+        addIndex1 = getIndexFromTournament(DEF_DIFF_TOURNAMENT_SIZE, pop, r);
       } while(!areDifferent(baseIndex, addIndex0, addIndex1));
 
       Table<double> solNew = getMutatedGenotype(pop[baseIndex].getGenotype(),
@@ -67,7 +70,7 @@ DiffIndividual DiffEvol::getBestFound(const int maxIteration, const int populati
           if(!pop[i].getAreContraintsSatisfied() || newQuality > pop[i].getFitness())
           {
             pop[i] = DiffIndividual(newQuality, solNew, true);
-            std::cerr << "Fitness: " << newQuality << '\n';
+//            std::cerr << "Fitness: " << newQuality << '\n';
           }
         }
       }
@@ -93,4 +96,19 @@ Table<DiffIndividual> DiffEvol::initPopulation(const int populationNumber) const
     res[i] = rs.getNextInd();
   }
   return res;
+}
+
+int DiffEvol::getIndexFromTournament(int size, Table<DiffIndividual> &pop, Random &r) const
+{
+    int populationNumber = pop.size();
+    int bestIndex = r.next(0, populationNumber-1);
+    for(int i = 0; i < size-1; ++i)
+    {
+      int rand = r.next(0, populationNumber-1);
+      if((pop[rand].getAreContraintsSatisfied() && !pop[bestIndex].getAreContraintsSatisfied()) || pop[rand].getFitness() > pop[bestIndex].getFitness())
+      {
+          bestIndex = rand;
+      }
+    }
+    return bestIndex;
 }

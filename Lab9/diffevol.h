@@ -16,6 +16,7 @@ public:
     Table<double> getMutatedGenotype(const Table<double> &base, const Table<double> &addInd0, const Table<double> &addInd1, const Table<Table<double> > &minmax, Random &r) const;
 private:
     Table<DiffIndividual> initPopulation(const int populationNumber) const;
+    int getIndexFromTournament(int size, Table<DiffIndividual> &pop, Random &r) const;
     MscnProblem* problem = NULL;
 };
 
