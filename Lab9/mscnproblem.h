@@ -9,6 +9,7 @@
 #include "matrixhelper.h"
 #include "streamhelper.h"
 #include "tablehelper.h"
+#include "problem.h"
 
 struct MscnSolution
 {
@@ -17,7 +18,7 @@ struct MscnSolution
     Matrix<double> xm;
 };
 
-class MscnProblem
+class MscnProblem : public Problem
 {
 public:
     MscnProblem();

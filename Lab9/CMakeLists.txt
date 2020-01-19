@@ -30,6 +30,8 @@ set(HEADERS
     diffevol.h
     diffindividual.h
     diffhelper.h
+    problem.h
+    optimizer.h
     )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})

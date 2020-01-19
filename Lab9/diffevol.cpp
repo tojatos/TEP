@@ -1,23 +1,10 @@
 #include "diffevol.h"
 
-DiffEvol::DiffEvol()
-{
 
-}
-
-DiffEvol::DiffEvol(MscnProblem *problem)
-{
-    this->problem = problem;
-}
-
-void DiffEvol::setProblem(MscnProblem *problem)
-{
-  this->problem = problem;
-}
 
 DiffIndividual DiffEvol::getBestFound() const
 {
-  return getBestFound(DEF_DIFF_EVOL_MAX_ITER, DEF_DIFF_EVOL_POP_NUMBER);
+  return getBestFound(DEF_DIFF_EVOL_MAX_ITER);
 }
 
 Table<double> DiffEvol::getMutatedGenotype(const Table<double> &base, const Table<double> &addInd0, const Table<double> &addInd1, const Table<Table<double>> &minmax, Random &r) const
@@ -34,7 +21,7 @@ Table<double> DiffEvol::getMutatedGenotype(const Table<double> &base, const Tabl
   return solNew;
 }
 
-DiffIndividual DiffEvol::getBestFound(const int maxIteration, const int populationNumber) const
+DiffIndividual DiffEvol::getBestFound(const int maxIteration) const
 {
   Table<DiffIndividual> pop = initPopulation(populationNumber);
   Random r;
@@ -47,12 +34,12 @@ DiffIndividual DiffEvol::getBestFound(const int maxIteration, const int populati
     for(int i = 0; i < populationNumber && iterations <= maxIteration; ++i)
     {
       do {
-//        baseIndex = r.next(0, populationNumber-1);
-//        addIndex0 = r.next(0, populationNumber-1);
-//        addIndex1 = r.next(0, populationNumber-1);
-        baseIndex = getIndexFromTournament(DEF_DIFF_TOURNAMENT_SIZE, pop, r);
-        addIndex0 = getIndexFromTournament(DEF_DIFF_TOURNAMENT_SIZE, pop, r);
-        addIndex1 = getIndexFromTournament(DEF_DIFF_TOURNAMENT_SIZE, pop, r);
+        baseIndex = r.next(0, populationNumber-1);
+        addIndex0 = r.next(0, populationNumber-1);
+        addIndex1 = r.next(0, populationNumber-1);
+//        baseIndex = getIndexFromTournament(DEF_DIFF_TOURNAMENT_SIZE, pop, r);
+//        addIndex0 = getIndexFromTournament(DEF_DIFF_TOURNAMENT_SIZE, pop, r);
+//        addIndex1 = getIndexFromTournament(DEF_DIFF_TOURNAMENT_SIZE, pop, r);
       } while(!areDifferent(baseIndex, addIndex0, addIndex1));
 
       Table<double> solNew = getMutatedGenotype(pop[baseIndex].getGenotype(),
@@ -61,7 +48,7 @@ DiffIndividual DiffEvol::getBestFound(const int maxIteration, const int populati
                                                 minmax,
                                                 r);
       int err;
-      bool cs = problem->constraintsSatisfied(*solNew, solLen, err);
+      bool cs = ((MscnProblem*)problem)->constraintsSatisfied(*solNew, solLen, err);
       if(err==E_OK && cs)
       {
         double newQuality = problem->getQuality(*solNew, solLen, err);
@@ -70,7 +57,7 @@ DiffIndividual DiffEvol::getBestFound(const int maxIteration, const int populati
           if(!pop[i].getAreContraintsSatisfied() || newQuality > pop[i].getFitness())
           {
             pop[i] = DiffIndividual(newQuality, solNew, true);
-//            std::cerr << "Fitness: " << newQuality << '\n';
+            std::cerr << "Fitness: " << newQuality << '\n';
           }
         }
       }

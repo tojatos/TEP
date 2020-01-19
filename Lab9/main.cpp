@@ -118,10 +118,9 @@ void randSearchTest()
     p.setDefaultMinMaxValues();
 //    std::cout << p << '\n';
     RandomSearch rs(&p);
-    Table<double> result = rs.getBestFound();
-    int err;
-    std::cerr << "Final fitness: " << p.getQuality(*result, result.size(), err) << '\n';
-    std::cerr << "Final solution: " << result << '\n';
+    DiffIndividual result = rs.getBestFound();
+    std::cerr << "Final fitness: " << result.getFitness() << '\n';
+    std::cerr << "Final solution: " << result.getGenotype() << '\n';
 }
 
 void modRandSearchTest()

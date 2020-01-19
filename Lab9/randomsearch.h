@@ -3,20 +3,18 @@
 #include "mscnproblem.h"
 #include "diffindividual.h"
 #include "random.h"
+#include "optimizer.h"
 
-class RandomSearch
+class RandomSearch : Optimizer
 {
 public:
-    RandomSearch();
-    RandomSearch(MscnProblem *problem);
-    void setProblem(MscnProblem *problem);
+    RandomSearch() {}
+    RandomSearch(Problem *p) { setProblem(p); }
+    DiffIndividual getBestFound() const override;
+    DiffIndividual getBestFound(const int maxIteration) const override;
     Table<double> getNext() const;
     Table<double> getNextValid() const;
-    Table<double> getBestFound() const;
-    Table<double> getBestFound(int maxIteration) const;
     DiffIndividual getNextInd() const;
-private:
-    MscnProblem* problem = NULL;
 };
 
 #endif // RANDOMSEARCH_H
