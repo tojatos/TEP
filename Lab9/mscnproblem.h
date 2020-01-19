@@ -53,7 +53,7 @@ public:
 
     Table<Table<double>> getMinMaxValues() const;
     int technicalCheck(double const * solution, int arrSize) const;
-    double getQuality(double const * solution, int arrSize, int &errorCode) const;
+    double getQuality(double *solution, int arrSize, int &errorCode) override;
     bool constraintsSatisfied(double const * solution, int arrSize, int &errorCode) const;
     int getSolutionLength() const;
 
@@ -92,6 +92,7 @@ private:
     double getP(Matrix<double> &xm) const;
     double getProfit(Matrix<double> &xd, Matrix<double> &xf, Matrix<double> &xm) const;
     MscnSolution parseSolution(double const * solution) const;
+    void fixSolution(double * solution);
 };
 
 #endif // MSCNPROBLEM_H

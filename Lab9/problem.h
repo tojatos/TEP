@@ -6,7 +6,7 @@ class Problem
 {
 public:
     virtual Table<Table<double>> getMinMaxValues() const = 0;
-    virtual double getQuality(double const * solution, int arrSize, int &errorCode) const = 0;
+    virtual double getQuality(double * solution, int arrSize, int &errorCode) = 0;
     virtual int getSolutionLength() const = 0;
     virtual ~Problem() {}
 };

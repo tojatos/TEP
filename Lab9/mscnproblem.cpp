@@ -186,6 +186,129 @@ double MscnProblem::getProfit(Matrix<double> &xd, Matrix<double> &xf, Matrix<dou
     return getP(xm) - getKt(xd, xf, xm) - getKu(xd, xf, xm);
 }
 
+void MscnProblem::fixSolution(double *solution)
+{
+  MscnSolution s = parseSolution(solution);
+  double sum, sum2, diff, current;
+
+  for(int i = 0; i < dCount; ++i)
+  {
+    if((sum = sumInARow(s.xd, i)) > sd[i])
+    {
+      diff = sum - sd[i];
+      //std::cerr << "Diff: " << diff << "\n";
+      //std::cerr << "Before: \n";
+      //std::cerr << s.xd << '\n';
+      for(int j = 0; j < fCount; ++j)
+      {
+        current = s.xd.get(i, j);
+        s.xd.set(current - current * (diff/sum), i, j);
+      }
+      //std::cerr << "After: \n";
+      //std::cerr << s.xd << '\n';
+      //std::cerr << "\n";
+    }
+  }
+
+  for(int i = 0; i < fCount; ++i)
+  {
+    if((sum = sumInARow(s.xf, i)) > (sum2 = sumInAColumn(s.xd, i)))
+    {
+      diff = sum - sum2;
+      //std::cerr << "Diff: " << diff << "\n";
+      //std::cerr << "Before: \n";
+      //std::cerr << s.xf << '\n';
+      for(int j = 0; j < mCount; ++j)
+      {
+        current = s.xf.get(i, j);
+        s.xf.set(current - current * (diff/sum), i, j);
+      }
+      //std::cerr << "After: \n";
+      //std::cerr << s.xf << '\n';
+      //std::cerr << "\n";
+    }
+  }
+
+  for(int i = 0; i < fCount; ++i)
+  {
+    if((sum = sumInARow(s.xf, i)) > sf[i])
+    {
+      diff = sum - sf[i];
+      //std::cerr << "Diff: " << diff << "\n";
+      //std::cerr << "Before: \n";
+      //std::cerr << s.xf << '\n';
+      for(int j = 0; j < mCount; ++j)
+      {
+        current = s.xf.get(i, j);
+        s.xf.set(current - current * (diff/sum), i, j);
+      }
+      //std::cerr << "After: \n";
+      //std::cerr << s.xf << '\n';
+      //std::cerr << "\n";
+    }
+  }
+
+  for(int i = 0; i < mCount; ++i)
+  {
+    if((sum = sumInARow(s.xm, i)) > (sum2 = sumInAColumn(s.xf, i)))
+    {
+      diff = sum - sum2;
+      //std::cerr << "Diff: " << diff << "\n";
+      //std::cerr << "Before: \n";
+      //std::cerr << s.xm << '\n';
+      for(int j = 0; j < sCount; ++j)
+      {
+        current = s.xm.get(i, j);
+        s.xm.set(current - current * (diff / sum), i, j);
+      }
+
+      //std::cerr << "Sum: " << sum << "\n";
+      //std::cerr << "After: \n";
+      //std::cerr << s.xm << '\n';
+      //std::cerr << "\n";
+    }
+  }
+
+  for(int i = 0; i < mCount; ++i)
+  {
+    if((sum = sumInARow(s.xm, i)) > sm[i])
+    {
+      diff = sum - sm[i];
+      for(int j = 0; j < sCount; ++j)
+      {
+        current = s.xm.get(i, j);
+        s.xm.set(current - current * (diff/sum), i, j);
+      }
+    }
+  }
+
+  for(int i = 0; i < sCount; ++i)
+  {
+    if((sum = sumInAColumn(s.xm, i)) > ss[i])
+    {
+      diff = sum - ss[i];
+      for(int j = 0; j < mCount; ++j)
+      {
+        current = s.xm.get(j, i);
+        s.xm.set(current - current * (diff/sum), j, i);
+      }
+    }
+  }
+
+  for(int i = 0; i < dCount; ++i)
+    for(int j = 0; j < fCount; ++j)
+      solution[i*fCount + j] = s.xd.get(i, j);
+
+  for(int i = 0; i < fCount; ++i)
+    for(int j = 0; j < mCount; ++j)
+      solution[dCount*fCount + i*dCount + j] = s.xf.get(i, j);
+
+  for(int i = 0; i < mCount; ++i)
+    for(int j = 0; j < sCount; ++j)
+      solution[dCount*fCount + fCount * mCount + i*sCount + j] = s.xm.get(i, j);
+//  if(technicalCheck(solution, getSolutionLength()) != 0) throw;
+}
+
 MscnSolution MscnProblem::parseSolution(double const * const solution) const
 {
     Matrix<double> xd(fCount, dCount);
@@ -432,9 +555,18 @@ void MscnProblem::setDefaultMinMaxValues()
         }
 }
 
-double MscnProblem::getQuality(double const * const solution, int arrSize, int &errorCode) const
+double MscnProblem::getQuality(double * solution, int arrSize, int &errorCode)
 {
     if((errorCode = technicalCheck(solution, arrSize)) != 0) return 0;
+
+//    int i = 1;
+    while(!constraintsSatisfied(solution, arrSize, errorCode))
+    {
+//        std::cerr << "I am not satisfied with that!" << std::endl;
+//        std::cerr << "Iteration: " << i << std::endl;
+        fixSolution(solution);
+//        i++;
+    }
 
     MscnSolution s = parseSolution(solution);
 
