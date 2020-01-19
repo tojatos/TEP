@@ -13,6 +13,7 @@ set(SOURCES
     modrandomsearch.cpp
     diffevol.cpp
     diffindividual.cpp
+    timer.cpp
     )
 set(HEADERS
     constants.h
@@ -32,6 +33,7 @@ set(HEADERS
     diffhelper.h
     problem.h
     optimizer.h
+    timer.h
     )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})

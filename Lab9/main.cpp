@@ -7,6 +7,7 @@
 #include "randomsearch.h"
 #include "modrandomsearch.h"
 #include "diffevol.h"
+#include "timer.h"
 
 void test()
 {
@@ -172,12 +173,16 @@ void diffEvolTest()
     p.setSCount(3);
     p.generateInstance(0);
     p.setDefaultMinMaxValues();
-    std::cout << p << '\n';
+//    std::cout << p << '\n';
     DiffEvol de(&p);
+    Timer t;
+    t.start();
     for (int i = 0; i < DEF_DIFF_EVOL_MAX_ITER; ++i)
     {
       de.iterate();
     }
+    t.stop();
+    std::cerr << "Elapsed time: " << t.getSecondsElapsed() << " seconds.\n";
     DiffIndividual di = de.getBestFound();
     std::cerr << "Final fitness: " << di.getFitness() << '\n';
     std::cerr << "Final solution: " << di.getGenotype() << '\n';
