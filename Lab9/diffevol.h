@@ -6,18 +6,61 @@
 #include "diffhelper.h"
 #include "optimizer.h"
 
-class DiffEvol : Optimizer
+class DiffEvol : public Optimizer
 {
 public:
-    DiffEvol() {}
-    DiffEvol(Problem *p) { this->problem = p; }
-    DiffIndividual getBestFound() const override;
-    DiffIndividual getBestFound(const int maxIteration) const override;
+    DiffEvol()
+    {
+        init(NULL, DEF_DIFF_EVOL_POP_NUMBER, DEF_DIFF_EVOL_CROSS_PROB, DEF_DIFF_EVOL_DIFF_WEIGHT, DEF_DIFF_TOURNAMENT_SIZE);
+    }
+    DiffEvol(Problem *p)
+    {
+        init(p, DEF_DIFF_EVOL_POP_NUMBER, DEF_DIFF_EVOL_CROSS_PROB, DEF_DIFF_EVOL_DIFF_WEIGHT, DEF_DIFF_TOURNAMENT_SIZE);
+        initPopulation();
+    }
+    DiffEvol(Problem *p, int populationNumber, double crossProbability, double diffWeight, int tournamentSize)
+    {
+        init(p, populationNumber, crossProbability, diffWeight, tournamentSize);
+        initPopulation();
+    }
+    void iterate();
+
+    DiffIndividual getBestFound() const override { return best; }
+
+    int getPopulationNumber() const;
+    void setPopulationNumber(int value);
+
+    double getCrossProbability() const;
+    void setCrossProbability(double value);
+
+    double getDiffWeight() const;
+    void setDiffWeight(double value);
+
+    int getTournamentSize() const;
+    void setTournamentSize(int value);
+
+    void initPopulation();
 private:
-    Table<DiffIndividual> initPopulation(const int populationNumber) const;
-    int getIndexFromTournament(int size, Table<DiffIndividual> &pop, Random &r) const;
-    Table<double> getMutatedGenotype(const Table<double> &base, const Table<double> &addInd0, const Table<double> &addInd1, const Table<Table<double> > &minmax, Random &r) const;
-    int populationNumber = DEF_DIFF_EVOL_POP_NUMBER;
+    Random r;
+    Table<DiffIndividual> pop;
+    DiffIndividual best;
+    int populationNumber;
+    double crossProbability;
+    double diffWeight;
+    int tournamentSize;
+    int currentIndex;
+
+    void init(Problem *p, int populationNumber, double crossProbability, double diffWeight, int tournamentSize)
+    {
+      this->problem = p;
+      this->populationNumber = populationNumber;
+      this->crossProbability = crossProbability;
+      this->diffWeight = diffWeight;
+      this->tournamentSize = tournamentSize;
+      this->currentIndex = 0;
+    }
+    Table<double> getMutatedGenotype(const Table<double> &base, const Table<double> &addInd0, const Table<double> &addInd1);
+    int getIndexFromTournament(int size);
 };
 
 #endif // DIFFEVOL_H

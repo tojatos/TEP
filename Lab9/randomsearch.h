@@ -11,7 +11,8 @@ public:
     RandomSearch() {}
     RandomSearch(Problem *p) { setProblem(p); }
     DiffIndividual getBestFound() const override;
-    DiffIndividual getBestFound(const int maxIteration) const override;
+    DiffIndividual getBestFound(const int maxIteration) const;
+    void iterate() override {}
     Table<double> getNext() const;
     Table<double> getNextValid() const;
     DiffIndividual getNextInd() const;

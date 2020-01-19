@@ -1,101 +1,83 @@
 #include "diffevol.h"
-
-
-
-DiffIndividual DiffEvol::getBestFound() const
-{
-  return getBestFound(DEF_DIFF_EVOL_MAX_ITER);
-}
-
-Table<double> DiffEvol::getMutatedGenotype(const Table<double> &base, const Table<double> &addInd0, const Table<double> &addInd1, const Table<Table<double>> &minmax, Random &r) const
+Table<double> DiffEvol::getMutatedGenotype(const Table<double> &base, const Table<double> &addInd0, const Table<double> &addInd1)
 {
   Table<double> solNew(base);
+  Table<Table<double>> minmax = problem->getMinMaxValues();
   int solLen = solNew.size();
   for(int geneOffset = 0; geneOffset < solLen; ++geneOffset)
   {
-    if(r.next(0.0, 1.0) < DEF_DIFF_EVOL_CROSS_PROB)
+    if(r.next(0.0, 1.0) < crossProbability)
     {
-      solNew[geneOffset] = clamp(solNew[geneOffset] + DEF_DIFF_EVOL_DIFF_WEIGHT * (addInd0[geneOffset] - addInd1[geneOffset]), minmax[geneOffset][0], minmax[geneOffset][1]);
+      solNew[geneOffset] = clamp(solNew[geneOffset] + diffWeight * (addInd0[geneOffset] - addInd1[geneOffset]), minmax[geneOffset][0], minmax[geneOffset][1]);
     }
   }
   return solNew;
 }
 
-DiffIndividual DiffEvol::getBestFound(const int maxIteration) const
+int DiffEvol::getTournamentSize() const { return tournamentSize; }
+void DiffEvol::setTournamentSize(int value) { tournamentSize = value; }
+double DiffEvol::getDiffWeight() const { return diffWeight; }
+void DiffEvol::setDiffWeight(double value) { diffWeight = value; }
+double DiffEvol::getCrossProbability() const { return crossProbability; }
+void DiffEvol::setCrossProbability(double value) { crossProbability = value; }
+int DiffEvol::getPopulationNumber() const { return populationNumber; }
+void DiffEvol::setPopulationNumber(int value) { populationNumber = value; }
+
+void DiffEvol::iterate()
 {
-  Table<DiffIndividual> pop = initPopulation(populationNumber);
-  Random r;
-  int solLen = problem->getSolutionLength();
-  Table<Table<double>> minmax = problem->getMinMaxValues();
+  int solutionLength = problem->getSolutionLength();
   int baseIndex, addIndex0, addIndex1;
-  int iterations = 0;
-  while(iterations <= maxIteration)
-  {
-    for(int i = 0; i < populationNumber && iterations <= maxIteration; ++i)
-    {
-      do {
-        baseIndex = r.next(0, populationNumber-1);
-        addIndex0 = r.next(0, populationNumber-1);
-        addIndex1 = r.next(0, populationNumber-1);
-//        baseIndex = getIndexFromTournament(DEF_DIFF_TOURNAMENT_SIZE, pop, r);
-//        addIndex0 = getIndexFromTournament(DEF_DIFF_TOURNAMENT_SIZE, pop, r);
-//        addIndex1 = getIndexFromTournament(DEF_DIFF_TOURNAMENT_SIZE, pop, r);
-      } while(!areDifferent(baseIndex, addIndex0, addIndex1));
+  do {
+    baseIndex = r.next(0, populationNumber-1);
+    addIndex0 = r.next(0, populationNumber-1);
+    addIndex1 = r.next(0, populationNumber-1);
+    //        baseIndex = getIndexFromTournament(DEF_DIFF_TOURNAMENT_SIZE, pop, r);
+    //        addIndex0 = getIndexFromTournament(DEF_DIFF_TOURNAMENT_SIZE, pop, r);
+    //        addIndex1 = getIndexFromTournament(DEF_DIFF_TOURNAMENT_SIZE, pop, r);
+  } while(!areDifferent(currentIndex, baseIndex, addIndex0, addIndex1));
 
-      Table<double> solNew = getMutatedGenotype(pop[baseIndex].getGenotype(),
-                                                pop[addIndex0].getGenotype(),
-                                                pop[addIndex1].getGenotype(),
-                                                minmax,
-                                                r);
-      int err;
-      bool cs = ((MscnProblem*)problem)->constraintsSatisfied(*solNew, solLen, err);
-      if(err==E_OK && cs)
-      {
-        double newQuality = problem->getQuality(*solNew, solLen, err);
-        if(err==E_OK)
-        {
-          if(!pop[i].getAreContraintsSatisfied() || newQuality > pop[i].getFitness())
-          {
-            pop[i] = DiffIndividual(newQuality, solNew, true);
-            std::cerr << "Fitness: " << newQuality << '\n';
-          }
-        }
-      }
-      iterations++;
+  Table<double> candidateSolution = getMutatedGenotype(pop[baseIndex].getGenotype(), pop[addIndex0].getGenotype(), pop[addIndex1].getGenotype());
+  int err;
+  double newQuality = problem->getQuality(*candidateSolution, solutionLength, err);
+  if(!pop[currentIndex].getAreContraintsSatisfied() || newQuality > pop[currentIndex].getFitness())
+  {
+    pop[currentIndex] = DiffIndividual(newQuality, candidateSolution, true);
+
+    std::cerr << "Fitness: " << newQuality << '\n';
+    if(newQuality > best.getFitness())
+    {
+      best = pop[currentIndex];
     }
   }
-  Table<double> zero(solLen);
-  DiffIndividual bestInd = DiffIndividual(0, zero, true);
-  for(int i = 0; i < populationNumber; ++i)
-  {
-    if(pop[i].getAreContraintsSatisfied() && pop[i].getFitness() > bestInd.getFitness())
-      bestInd = pop[i];
-  }
-  return bestInd;
+  currentIndex = (currentIndex+1) % populationNumber;
 }
 
-Table<DiffIndividual> DiffEvol::initPopulation(const int populationNumber) const
+void DiffEvol::initPopulation()
 {
+  pop = Table<DiffIndividual>(populationNumber);
   RandomSearch rs(problem);
-  Table<DiffIndividual> res(populationNumber);
-  for(int i = 0; i < populationNumber; ++i)
+  pop[0] = rs.getNextInd();
+  best = pop[0];
+  for(int i = 1; i < populationNumber; ++i)
   {
-    res[i] = rs.getNextInd();
+    pop[i] = rs.getNextInd();
+    if(pop[i].getAreContraintsSatisfied() && pop[i].getFitness() > best.getFitness())
+    {
+      best = pop[i];
+    }
   }
-  return res;
 }
 
-int DiffEvol::getIndexFromTournament(int size, Table<DiffIndividual> &pop, Random &r) const
+int DiffEvol::getIndexFromTournament(int size)
 {
-    int populationNumber = pop.size();
-    int bestIndex = r.next(0, populationNumber-1);
-    for(int i = 0; i < size-1; ++i)
+  int bestIndex = r.next(0, populationNumber-1);
+  for(int i = 0; i < size-1; ++i)
+  {
+    int rand = r.next(0, populationNumber-1);
+    if((pop[rand].getAreContraintsSatisfied() && !pop[bestIndex].getAreContraintsSatisfied()) || pop[rand].getFitness() > pop[bestIndex].getFitness())
     {
-      int rand = r.next(0, populationNumber-1);
-      if((pop[rand].getAreContraintsSatisfied() && !pop[bestIndex].getAreContraintsSatisfied()) || pop[rand].getFitness() > pop[bestIndex].getFitness())
-      {
-          bestIndex = rand;
-      }
+      bestIndex = rand;
     }
-    return bestIndex;
+  }
+  return bestIndex;
 }

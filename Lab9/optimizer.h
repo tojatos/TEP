@@ -8,7 +8,7 @@ class Optimizer
 public:
     void setProblem(Problem *problem) { this->problem = problem; }
     virtual DiffIndividual getBestFound() const = 0;
-    virtual DiffIndividual getBestFound(const int maxIteration) const = 0;
+    virtual void iterate() = 0;
     virtual ~Optimizer() {}
 protected:
     Problem* problem = NULL;

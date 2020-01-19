@@ -174,6 +174,10 @@ void diffEvolTest()
     p.setDefaultMinMaxValues();
     std::cout << p << '\n';
     DiffEvol de(&p);
+    for (int i = 0; i < DEF_DIFF_EVOL_MAX_ITER; ++i)
+    {
+      de.iterate();
+    }
     DiffIndividual di = de.getBestFound();
     std::cerr << "Final fitness: " << di.getFitness() << '\n';
     std::cerr << "Final solution: " << di.getGenotype() << '\n';
