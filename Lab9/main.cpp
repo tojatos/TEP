@@ -177,11 +177,12 @@ void diffEvolTest()
     DiffEvol de(&p);
     Timer t;
     t.start();
-    for (int i = 0; i < DEF_DIFF_EVOL_MAX_ITER; ++i)
+//    for (int i = 0; i < DEF_DIFF_EVOL_MAX_ITER; ++i)
+    while(t.getSecondsElapsed() < DEF_DIFF_EVOL_ITER_TIME)
     {
+      t.stop();
       de.iterate();
     }
-    t.stop();
     std::cerr << "Elapsed time: " << t.getSecondsElapsed() << " seconds.\n";
     DiffIndividual di = de.getBestFound();
     std::cerr << "Final fitness: " << di.getFitness() << '\n';

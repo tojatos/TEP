@@ -7,7 +7,7 @@ Timer::Timer()
 
 void Timer::start()
 {
-    startTime = std::chrono::high_resolution_clock::now();
+    endTime = startTime = std::chrono::high_resolution_clock::now();
 }
 
 void Timer::stop()
