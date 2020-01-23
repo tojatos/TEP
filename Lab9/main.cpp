@@ -8,6 +8,7 @@
 #include "modrandomsearch.h"
 #include "diffevol.h"
 #include "timer.h"
+#include "randomgreed.h"
 
 void test()
 {
@@ -188,6 +189,31 @@ void diffEvolTest()
     std::cerr << "Final fitness: " << di.getFitness() << '\n';
     std::cerr << "Final solution: " << di.getGenotype() << '\n';
 }
+
+void randGreedTest()
+{
+    MscnProblem p;
+    p.setDCount(2);
+    p.setFCount(2);
+    p.setMCount(2);
+    p.setSCount(3);
+    p.generateInstance(0);
+    p.setDefaultMinMaxValues();
+//    std::cout << p << '\n';
+    RandomGreed de(&p);
+    Timer t;
+    t.start();
+//    for (int i = 0; i < DEF_DIFF_EVOL_MAX_ITER; ++i)
+    while(t.getSecondsElapsed() < DEF_DIFF_EVOL_ITER_TIME)
+    {
+      t.stop();
+      de.iterate();
+    }
+    std::cerr << "Elapsed time: " << t.getSecondsElapsed() << " seconds.\n";
+    DiffIndividual di = de.getBestFound();
+    std::cerr << "Final fitness: " << di.getFitness() << '\n';
+    std::cerr << "Final solution: " << di.getGenotype() << '\n';
+}
 int main()
 {
 //    modtest();
@@ -199,7 +225,8 @@ int main()
     std::cerr.precision(12);
 //    randSearchTest();
 //    modRandSearchTest();
-    diffEvolTest();
+//    diffEvolTest();
+    randGreedTest();
 
     return 0;
 }

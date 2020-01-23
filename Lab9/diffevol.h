@@ -23,7 +23,7 @@ public:
         init(p, populationNumber, crossProbability, diffWeight, tournamentSize);
         initPopulation();
     }
-    void iterate();
+    void iterate() override;
 
     DiffIndividual getBestFound() const override { return best; }
 

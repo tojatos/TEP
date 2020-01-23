@@ -14,6 +14,7 @@ set(SOURCES
     diffevol.cpp
     diffindividual.cpp
     timer.cpp
+    randomgreed.cpp
     )
 set(HEADERS
     constants.h
@@ -34,6 +35,7 @@ set(HEADERS
     problem.h
     optimizer.h
     timer.h
+    randomgreed.h
     )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
